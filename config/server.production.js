@@ -6,9 +6,8 @@ const dbUser = process.env.DB_USER || '';
 const dbPass = process.env.DB_PASS || '';
 const dbCred =
 	dbUser.length > 0 || dbPass.length > 0 ? `${dbUser}:${dbPass}@` : '';
-
-const dbUrl =
-	process.env.DB_URL || `mongodb://${dbCred}${dbHost}:${dbPort}/${dbName}`;
+// const dbUrl = process.env.DB_URL || `mongodb+srv://booklary:harish@cluster0.yqkeo.mongodb.net/booklary?retryWrites=true&w=majority
+const dbUrl = `mongodb+srv://booklary:harish@cluster0.yqkeo.mongodb.net/booklary?retryWrites=true&w=majority`;
 
 module.exports = {
 	// used by Store (server side)
