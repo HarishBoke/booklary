@@ -9,7 +9,7 @@ class EmailSettingsService {
 			secure: true,
 			user: 'harish.eyug@gmail.com',
 			pass: 'harishEyug#1',
-			fromName: 'Booklary c',
+			fromName: 'Booklary',
 			fromAddress: 'harish.eyug@gmail.com'
 		};
 	}
