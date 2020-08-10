@@ -4,12 +4,13 @@ import parse from '../../lib/parse';
 class EmailSettingsService {
 	constructor() {
 		this.defaultSettings = {
-			host: '',
-			port: '',
-			user: '',
-			pass: 0,
-			from_name: '',
-			from_address: ''
+			host: 'smtp.gmail.com',
+			port: 465,
+			secure: true,
+			user: 'harish.eyug@gmail.com',
+			pass: 'harishEyug#1',
+			fromName: 'Booklary c',
+			fromAddress: 'harish.eyug@gmail.com'
 		};
 	}
 

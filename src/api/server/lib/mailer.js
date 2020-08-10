@@ -5,6 +5,7 @@ import settings from './settings';
 import EmailSettingsService from '../services/settings/email';
 
 const SMTP_FROM_CONFIG_FILE = {
+	service: settings.smtpServer.service,
 	host: settings.smtpServer.host,
 	port: settings.smtpServer.port,
 	secure: settings.smtpServer.secure,
@@ -32,7 +33,8 @@ const getSmtp = emailSettings => {
 		? SMTP_FROM_CONFIG_FILE
 		: getSmtpFromEmailSettings(emailSettings);
 
-	return smtp;
+	// return smtp;
+	return SMTP_FROM_CONFIG_FILE;
 };
 
 const sendMail = (smtp, message) => {

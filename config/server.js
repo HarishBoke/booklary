@@ -1,7 +1,7 @@
 // config used by server side only
 const dbHost = process.env.DB_HOST || '127.0.0.1';
 const dbPort = process.env.DB_PORT || 27017;
-const dbName = process.env.DB_NAME || 'shop';
+const dbName = process.env.DB_NAME || 'harishboke';
 const dbUser = process.env.DB_USER || '';
 const dbPass = process.env.DB_PASS || '';
 const dbCred =
@@ -31,13 +31,14 @@ module.exports = {
 
 	// your shop smtp settings
 	smtpServer: {
-		host: '',
+		service: 'Gmail',
+		host: 'smtp.gmail.com',
 		port: 465,
 		secure: true,
-		user: '',
-		pass: '',
-		fromName: 'Cezerin',
-		fromAddress: 'vam@test.com'
+		user: 'harish.eyug@gmail.com',
+		pass: 'harishEyug#1',
+		fromName: 'Booklary c',
+		fromAddress: 'harish.eyug@gmail.com'
 	},
 	// key to sign tokens
 	jwtSecretKey: '-',
