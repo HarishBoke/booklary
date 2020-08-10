@@ -1,16 +1,18 @@
 import { db } from '../../lib/mongo';
 import parse from '../../lib/parse';
+require('dotenv').config();
 
 class EmailSettingsService {
 	constructor() {
 		this.defaultSettings = {
-			host: 'smtp.gmail.com',
-			port: 465,
-			secure: true,
-			user: 'harish.eyug@gmail.com',
-			pass: 'harishEyug#1',
-			fromName: 'Booklary',
-			fromAddress: 'harish.eyug@gmail.com'
+			service: process.env.SMTP_SERVICE,
+			host: process.env.SMTP_HOST,
+			port: process.env.SMTP_PORT,
+			secure: process.env.SMTP_SECURE,
+			user: process.env.SMTP_USER,
+			pass: process.env.SMTP_PASS,
+			fromName: process.env.SMTP_FROM_NAME,
+			fromAddress: process.env.SMTP_FROM_ADDRESS
 		};
 	}
 

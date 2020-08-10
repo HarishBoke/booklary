@@ -14,6 +14,8 @@ import apiRouter from './apiRouter';
 
 const app = express();
 
+require('dotenv').config();
+
 security.applyMiddleware(app);
 app.set('trust proxy', 1);
 app.use(helmet());
@@ -41,7 +43,7 @@ app.use(logger.sendResponse);
 
 const server = app.listen(settings.apiListenPort, () => {
 	const serverAddress = server.address();
-	winston.info(`API running at http://localhost:${serverAddress.port}`);
+	winston.info(`API running ${process.env.API_ENV}:${settings.apiListenPort}`);
 });
 
 dashboardWebSocket.listen(server);

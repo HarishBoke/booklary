@@ -1,23 +1,32 @@
 // config used by server side only
+require('dotenv').config();
+
 const dbHost = process.env.DB_HOST || '127.0.0.1';
 const dbPort = process.env.DB_PORT || 27017;
-const dbName = process.env.DB_NAME || 'shop';
+const dbName = process.env.DB_NAME || 'harishboke';
 const dbUser = process.env.DB_USER || '';
 const dbPass = process.env.DB_PASS || '';
 const dbCred =
 	dbUser.length > 0 || dbPass.length > 0 ? `${dbUser}:${dbPass}@` : '';
-// const dbUrl = process.env.DB_URL || `mongodb+srv://booklary:harish@cluster0.yqkeo.mongodb.net/booklary?retryWrites=true&w=majority
-const dbUrl = `mongodb+srv://booklary:harish@cluster0.yqkeo.mongodb.net/booklary?retryWrites=true&w=majority`;
+const apiENV = process.env.API_ENV || 'localhost:3001';
+const ajaxENV = process.env.AJAX_ENV || 'localhost:3001';
+const storeENV = process.env.STORE_ENV || 'localhost:3000';
+
+const dbUrl =
+	process.env.DB_URL || `mongodb://${dbCred}${dbHost}:${dbPort}/${dbName}`;
 
 module.exports = {
 	// used by Store (server side)
-	apiBaseUrl: `http://localhost:3001/api/v1`,
+	apiBaseUrl: `http://${apiENV}/api/v1`,
 
 	// used by Store (server and client side)
-	ajaxBaseUrl: `http://localhost:3001/ajax`,
+	ajaxBaseUrl: `http://${ajaxENV}/ajax`,
 
 	// Access-Control-Allow-Origin
-	storeBaseUrl: '*',
+	storeBaseUrl: `http://${storeENV}`,
+
+	// Access-Control-Allow-Origin
+	// storeBaseUrl: '*',
 
 	// used by API
 	adminLoginUrl: '/admin/login',
@@ -29,20 +38,21 @@ module.exports = {
 	mongodbServerUrl: dbUrl,
 
 	smtpServer: {
-		host: '',
-		port: 0,
-		secure: true,
-		user: '',
-		pass: '',
-		fromName: '',
-		fromAddress: ''
+		service: process.env.SMTP_SERVICE,
+		host: process.env.SMTP_HOST,
+		port: process.env.SMTP_PORT,
+		secure: process.env.SMTP_SECURE,
+		user: process.env.SMTP_USER,
+		pass: process.env.SMTP_PASS,
+		fromName: process.env.SMTP_FROM_NAME,
+		fromAddress: process.env.SMTP_FROM_ADDRESS
 	},
 
 	// key to sign tokens
-	jwtSecretKey: 'SP69kXFR3znRi7kL8Max2GTB24wOtEQj',
+	jwtSecretKey: '-',
 
 	// key to sign store cookies
-	cookieSecretKey: '8669X9P5yI1DAEthy1chc3M9EncyS7SM',
+	cookieSecretKey: '-',
 
 	// path to uploads
 	categoriesUploadPath: 'public/content/images/categories',

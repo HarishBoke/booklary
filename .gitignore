@@ -16,4 +16,5 @@ theme/assets/precache-manifest.*.js
 dist/*
 logs/*
 npm-debug.log*
+.env
 *.zip
