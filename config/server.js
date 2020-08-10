@@ -7,8 +7,8 @@ const dbPass = process.env.DB_PASS || '';
 const dbCred =
 	dbUser.length > 0 || dbPass.length > 0 ? `${dbUser}:${dbPass}@` : '';
 
-const dbUrl =
-	process.env.DB_URL || `mongodb://${dbCred}${dbHost}:${dbPort}/${dbName}`;
+// const dbUrl = process.env.DB_URL || `mongodb://${dbCred}${dbHost}:${dbPort}/${dbName}`;
+const dbUrl = `mongodb+srv://ankush:ankush@cluster0-hgr7y.mongodb.net/booklary`;
 
 module.exports = {
 	// used by Store (server side)
