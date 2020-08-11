@@ -11,12 +11,14 @@ import { db } from './lib/mongo';
 import dashboardWebSocket from './lib/dashboardWebSocket';
 import ajaxRouter from './ajaxRouter';
 import apiRouter from './apiRouter';
+import cors from 'cors';
 
 const app = express();
 
 require('dotenv').config();
 
 security.applyMiddleware(app);
+app.use(cors());
 app.set('trust proxy', 1);
 app.use(helmet());
 app.all('*', (req, res, next) => {

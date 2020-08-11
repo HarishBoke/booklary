@@ -10,6 +10,8 @@ import robotsRendering from './robotsRendering';
 import sitemapRendering from './sitemapRendering';
 import redirects from './redirects';
 import pageRendering from './pageRendering';
+import cors from 'cors';
+
 require('dotenv').config();
 const app = express();
 
@@ -17,7 +19,7 @@ const ADMIN_INDEX_PATH = path.resolve('public/admin/index.html');
 const STATIC_OPTIONS = {
 	maxAge: 31536000000 // One year
 };
-
+app.use(cors());
 app.set('trust proxy', 1);
 app.use(helmet());
 app.get('/images/:entity/:id/:size/:filename', (req, res, next) => {
