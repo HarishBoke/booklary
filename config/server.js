@@ -25,7 +25,8 @@ module.exports = {
 	ajaxBaseUrl: `${currentProtocol}://${ajaxENV}/ajax`,
 
 	// Access-Control-Allow-Origin
-	storeBaseUrl: `${currentProtocol}://${storeENV}`,
+	// storeBaseUrl: `${currentProtocol}://${storeENV}`,
+	storeBaseUrl: `*`,
 
 	// used by API
 	adminLoginUrl: '/admin/login',
