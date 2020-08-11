@@ -48,7 +48,7 @@ app.get('*', pageRendering);
 
 const apiENV = process.env.API_ENV;
 
-const server = app.listen(settings.storeListenPort, () => {
+const server = app.listen(process.env.PORT || settings.storeListenPort, () => {
 	const serverAddress = server.address();
 	winston.info(`Store running at ${apiENV} `);
 });

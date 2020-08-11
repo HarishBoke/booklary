@@ -41,9 +41,11 @@ app.use('/ajax', ajaxRouter);
 app.use('/api', apiRouter);
 app.use(logger.sendResponse);
 
-const server = app.listen(settings.apiListenPort, () => {
+const server = app.listen(process.env.PORT || settings.apiListenPort, () => {
 	const serverAddress = server.address();
-	winston.info(`API running ${process.env.API_ENV}:${settings.apiListenPort}`);
+	winston.info(
+		`API running ${process.env.API_ENV}:${settings.apiListenPort} or ${process.env.PORT}`
+	);
 });
 
 dashboardWebSocket.listen(server);
