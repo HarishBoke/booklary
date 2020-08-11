@@ -18,7 +18,8 @@ const app = express();
 require('dotenv').config();
 
 security.applyMiddleware(app);
-app.use(cors());
+
+app.use(cors({ origin: settings.storeBaseUrl, credentials: true }));
 app.set('trust proxy', 1);
 app.use(helmet());
 app.all('*', (req, res, next) => {
@@ -43,11 +44,9 @@ app.use('/ajax', ajaxRouter);
 app.use('/api', apiRouter);
 app.use(logger.sendResponse);
 
-const server = app.listen(process.env.PORT || settings.apiListenPort, () => {
+const server = app.listen(settings.apiListenPort, () => {
 	const serverAddress = server.address();
-	winston.info(
-		`API running ${process.env.API_ENV}:${settings.apiListenPort} or ${process.env.PORT}`
-	);
+	winston.info(`API running ${process.env.API_ENV}:${settings.apiListenPort}`);
 });
 
 dashboardWebSocket.listen(server);

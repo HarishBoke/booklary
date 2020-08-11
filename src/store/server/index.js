@@ -19,7 +19,7 @@ const ADMIN_INDEX_PATH = path.resolve('public/admin/index.html');
 const STATIC_OPTIONS = {
 	maxAge: 31536000000 // One year
 };
-app.use(cors());
+app.use(cors({ origin: settings.storeBaseUrl, credentials: true }));
 app.set('trust proxy', 1);
 app.use(helmet());
 app.get('/images/:entity/:id/:size/:filename', (req, res, next) => {
