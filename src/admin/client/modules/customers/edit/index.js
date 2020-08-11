@@ -59,8 +59,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 export default withRouter(
-	connect(
-		mapStateToProps,
-		mapDispatchToProps
-	)(CustomerDetails)
+	connect(mapStateToProps, mapDispatchToProps)(CustomerDetails)
 );

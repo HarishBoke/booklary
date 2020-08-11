@@ -23,23 +23,13 @@ const CheckoutSuccessContainer = props => {
 				ogDescription={pageDetails.meta_description}
 			/>
 
-			<section className="section section-checkout">
-				<div className="container">
-					<div className="columns content">
-						<div className="column is-8 is-offset-2">
-							<div className="checkout-box">
-								<CheckoutSuccess
-									order={order}
-									settings={settings}
-									pageDetails={pageDetails}
-									shippingMethod={shippingMethod}
-									checkoutFields={checkoutFields}
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+			<CheckoutSuccess
+				order={order}
+				settings={settings}
+				pageDetails={pageDetails}
+				shippingMethod={shippingMethod}
+				checkoutFields={checkoutFields}
+			/>
 		</Fragment>
 	);
 };

@@ -133,5 +133,9 @@ module.exports = {
 		children: false,
 		entrypoints: false,
 		modules: false
+	},
+
+	node: {
+		fs: 'empty'
 	}
 };

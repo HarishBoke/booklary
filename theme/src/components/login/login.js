@@ -14,28 +14,28 @@ const validateEmail = value =>
 
 const ReadOnlyField = ({ name, value }) => {
 	return (
-		<div className="checkout-field-preview">
-			<div className="name">{name}</div>
-			<div className="value">{value}</div>
+		<div className="checkout__field-preview field-preview">
+			<div className="field-preview__name">{name}</div>
+			<div className="field-preview__value">{value}</div>
 		</div>
 	);
 };
 
 const InputField = field => (
 	<div className={field.className}>
-		<label htmlFor={field.id}>
-			{field.label}
-			{field.meta.touched && field.meta.error && (
-				<span className="error">{field.meta.error}</span>
-			)}
-		</label>
 		<input
 			{...field.input}
-			placeholder={field.placeholder}
+			placeholder={field.label}
 			type={field.type}
 			id={field.id}
 			className={field.meta.touched && field.meta.error ? 'invalid' : ''}
 		/>
+		<label htmlFor={field.id}>
+			{field.meta.touched && field.meta.error && (
+				<span className="error">{field.meta.error}</span>
+			)}
+			<span className="login__label">{field.label}</span>
+		</label>
 	</div>
 );
 
@@ -143,21 +143,21 @@ class Login extends React.Component {
 			}
 		}
 
-		const inputClassName = 'login-input-field';
-		const titleClassName = 'login-title';
-		const loginButtonClass = 'account-button button';
-		const loginSectionGuest = 'login-section-guest';
+		const inputClassName = 'login__input-field';
+		const titleClassName = 'login__title';
+		const loginButtonClass = 'login__button button button_login';
+		const loginSectionGuest = 'login__section login__section_guest';
 		const errorAlertText = 'error-alert-text';
 		const loginForm =
 			this.props.cartlayerBtnInitialized !== undefined &&
 			this.props.cartlayerBtnInitialized
-				? 'login-form login-form login-form-with-guest'
-				: 'login-form';
+				? 'login__section login__section_with-guest'
+				: 'login__section';
 
 		return (
-			<div className="login-container">
-				<form onSubmit={handleSubmit} className={loginForm}>
-					<div className="login-section">
+			<section className="login-container section-container">
+				<div className={loginForm}>
+					<form onSubmit={handleSubmit} className="login__form">
 						<h2 className={titleClassName}>{text.login_title}</h2>
 						{this.props.customerProperties !== undefined &&
 						this.props.customerProperties.loggedin_failed ? (
@@ -190,43 +190,40 @@ class Login extends React.Component {
 								placeholder={this.getFieldPlaceholder('password')}
 							/>
 						)}
-						<div className="login-link-wrap">
+						<div className="login__link">
 							<Link to="/forgot-password">{text.forgot_password}</Link>
 						</div>
-						<div className="login-button-wrap">
-							<button type="submit" className={loginButtonClass}>
-								{text.login}
-							</button>
-						</div>
+						<button type="submit" className={loginButtonClass}>
+							{text.login}
+						</button>
 
-						<NavLink className="logo-image" to="/register">
-							<div className="login-button-wrap">
-								<button
-									type="button"
-									className={loginButtonClass}
-									onClick={this.switchRegister}
-								>
-									{text.register}
-								</button>
-							</div>
+						<NavLink className="login__registration" to="/register">
+							<button
+								type="button"
+								className="login__button button button_light"
+								onClick={this.switchRegister}
+							>
+								{text.register}
+							</button>
 						</NavLink>
-					</div>
-				</form>
+					</form>
+				</div>
+
 				{this.props.cartlayerBtnInitialized !== undefined &&
 					this.props.cartlayerBtnInitialized && (
 						<div className={loginSectionGuest}>
-							<h2>{text.continue_guest_headline}</h2>
-							<p>{text.continue_guest_text}</p>
-							<NavLink
-								className="button loginButtonClass"
-								style={{ textTransform: 'uppercase' }}
-								to="/checkout"
-							>
-								{text.proceedToCheckout}
-							</NavLink>
+							<div className="login__guest">
+								<h2 className={titleClassName}>
+									{text.continue_guest_headline}
+								</h2>
+								<p className="login__text_guest">{text.continue_guest_text}</p>
+								<NavLink className={loginButtonClass} to="/checkout">
+									{text.proceedToCheckout}
+								</NavLink>
+							</div>
 						</div>
 					)}
-			</div>
+			</section>
 		);
 	}
 }

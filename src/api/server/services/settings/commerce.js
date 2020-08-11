@@ -4,9 +4,9 @@ import parse from '../../lib/parse';
 class CommerceSettingsService {
 	constructor() {
 		this.defaultSettings = {
-            status: '',
-            serviceOptions: '',
-            deliveryRadius: ''
+			status: '',
+			serviceOptions: '',
+			deliveryRadius: ''
 		};
 	}
 
@@ -41,7 +41,9 @@ class CommerceSettingsService {
 			.countDocuments({})
 			.then(count => {
 				if (count === 0) {
-					return db.collection('commerceSettings').insertOne(this.defaultSettings);
+					return db
+						.collection('commerceSettings')
+						.insertOne(this.defaultSettings);
 				} else {
 					return;
 				}

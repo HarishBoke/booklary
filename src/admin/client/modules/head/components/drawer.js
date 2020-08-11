@@ -103,36 +103,33 @@ const styles = {
 };
 
 const DrawerMenu = ({ open, onClose, currentUrl }) => {
-	const items = menuItems.map(
-		(item, index) =>
-			item.title === '-' ? (
-				<Divider key={index} />
-			) : (
-				<NavLink
-					to={item.url}
-					key={index}
-					exact={true}
-					style={styles.link}
-					activeStyle={styles.linkActive}
-				>
-					<MenuItem
-						onClick={onClose}
-						primaryText={item.title}
-						innerDivStyle={styles.itemInnerDiv}
-						style={styles.item}
-						leftIcon={
-							<FontIcon
-								style={
-									item.url === currentUrl ? styles.iconActive : styles.icon
-								}
-								className="material-icons"
-							>
-								{item.icon}
-							</FontIcon>
-						}
-					/>
-				</NavLink>
-			)
+	const items = menuItems.map((item, index) =>
+		item.title === '-' ? (
+			<Divider key={index} />
+		) : (
+			<NavLink
+				to={item.url}
+				key={index}
+				exact={true}
+				style={styles.link}
+				activeStyle={styles.linkActive}
+			>
+				<MenuItem
+					onClick={onClose}
+					primaryText={item.title}
+					innerDivStyle={styles.itemInnerDiv}
+					style={styles.item}
+					leftIcon={
+						<FontIcon
+							style={item.url === currentUrl ? styles.iconActive : styles.icon}
+							className="material-icons"
+						>
+							{item.icon}
+						</FontIcon>
+					}
+				/>
+			</NavLink>
+		)
 	);
 
 	return (

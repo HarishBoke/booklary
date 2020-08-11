@@ -14,19 +14,19 @@ const validateEmail = value =>
 
 const InputField = field => (
 	<div className={field.className}>
-		<label htmlFor={field.id}>
-			{field.label}
-			{field.meta.touched && field.meta.error && (
-				<span className="error">{field.meta.error}</span>
-			)}
-		</label>
 		<input
 			{...field.input}
-			placeholder={field.placeholder}
+			placeholder={field.label}
 			type={field.type}
 			id={field.id}
 			className={field.meta.touched && field.meta.error ? 'invalid' : ''}
 		/>
+		<label htmlFor={field.id}>
+			{field.meta.touched && field.meta.error && (
+				<span className="error">{field.meta.error}</span>
+			)}
+			<span className="login__label">{field.label}</span>
+		</label>
 	</div>
 );
 
@@ -96,17 +96,16 @@ class ResetPassword extends React.Component {
 		const field = this.getField(fieldName);
 		if (field && field.label && field.label.length > 0) {
 			return field.label;
-		} else {
-			switch (fieldName) {
-				case 'password':
-					return text.password;
-					break;
-				case 'password_verify':
-					return text.password_verify;
-					break;
-				default:
-					return 'Unnamed field';
-			}
+		}
+		switch (fieldName) {
+			case 'password':
+				return text.password;
+				break;
+			case 'password_verify':
+				return text.password_verify;
+				break;
+			default:
+				return 'Unnamed field';
 		}
 	};
 
@@ -124,14 +123,14 @@ class ResetPassword extends React.Component {
 			resetPasswordProperties
 		} = this.props;
 
-		const inputClassName = 'login-input-field';
-		const loginTitleClassName = 'login-title';
-		const loginSuccessTitleClassName = 'login-success-title';
-		const loginButtonClass = 'account-button button';
+		const inputClassName = 'login-input-field input__text-field';
+		const loginTitleClassName = 'login__title';
+		const loginSuccessTitleClassName = 'login__title login__title_success';
+		const loginButtonClass = 'login__button button button_login';
 		return (
-			<div className="login-container">
-				<form onSubmit={handleSubmit} className="login-form">
-					<div className="login-section">
+			<section className="login-container section-container">
+				<div className="login__section">
+					<form onSubmit={handleSubmit} className="login__form">
 						<h1 className={loginTitleClassName}>{text.reset_password}</h1>
 						<p
 							className={
@@ -174,26 +173,24 @@ class ResetPassword extends React.Component {
 							/>
 						)}
 
-						<div className="login-button-wrap">
-							{!resetPasswordProperties.verified && (
-								<button type="submit" className={loginButtonClass}>
-									{text.forgot_password_submit}
-								</button>
-							)}
-							{resetPasswordProperties.verified && (
-								<Link
-									to="/login"
-									style={{ textDecoration: 'none' }}
-									key={'back-to-login'}
-									className={loginButtonClass}
-								>
-									{text.back_to_login}
-								</Link>
-							)}
-						</div>
-					</div>
-				</form>
-			</div>
+						{!resetPasswordProperties.verified && (
+							<button type="submit" className={loginButtonClass}>
+								{text.forgot_password_submit}
+							</button>
+						)}
+						{resetPasswordProperties.verified && (
+							<Link
+								to="/login"
+								style={{ textDecoration: 'none' }}
+								key={'back-to-login'}
+								className={loginButtonClass}
+							>
+								{text.back_to_login}
+							</Link>
+						)}
+					</form>
+				</div>
+			</section>
 		);
 	}
 }

@@ -52,8 +52,8 @@ export default class ResetPasswordForm extends React.Component {
 		}
 
 		const {
-			checkoutInputClass = 'checkout-field',
-			checkoutButtonClass = 'checkout-button'
+			checkoutInputClass = 'checkout__field input__text-field',
+			checkoutButtonClass = 'checkout__button button'
 		} = themeSettings;
 
 		return (

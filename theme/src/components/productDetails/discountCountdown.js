@@ -14,7 +14,7 @@ export default class DiscountCountdown extends React.Component {
 	componentDidMount() {
 		let timer = setInterval(this.tick, 1000);
 		this.setState({
-			timer: timer
+			timer
 		});
 	}
 
@@ -30,13 +30,11 @@ export default class DiscountCountdown extends React.Component {
 		);
 
 		this.setState({
-			diff: diff
+			diff
 		});
 	};
 
-	pad = num => {
-		return num < 10 ? '0' + num : num;
-	};
+	pad = num => (num < 10 ? `0${num}` : num);
 
 	render() {
 		const { product } = this.props;
@@ -47,41 +45,34 @@ export default class DiscountCountdown extends React.Component {
 			let leftSec = diff - days * 24 * 60 * 60;
 
 			let hrs = Math.floor(leftSec / (60 * 60));
-			leftSec = leftSec - hrs * 60 * 60;
+			leftSec -= hrs * 60 * 60;
 
 			let min = Math.floor(leftSec / 60);
-			leftSec = leftSec - min * 60;
+			leftSec -= min * 60;
 
 			return (
-				<div className="discount-countdown">
-					<div className="discount-title">{text.saleEnds}:</div>
+				<div className="product__discount discount-countdown">
+					<div className="discount__title product__title">{text.saleEnds}:</div>
 
-					<div
-						className="columns is-mobile has-text-centered discount-numbers is-gapless"
-						style={{ margin: '8px 0' }}
-					>
-						<div className="column is-2">{this.pad(days)}</div>
-						<div className="column is-1">:</div>
-						<div className="column is-2">{this.pad(hrs)}</div>
-						<div className="column is-1">:</div>
-						<div className="column is-2">{this.pad(min)}</div>
-						<div className="column is-1">:</div>
-						<div className="column is-2">{this.pad(leftSec)}</div>
-					</div>
-
-					<div className="columns is-mobile has-text-centered discount-labels is-gapless">
-						<div className="column is-2">{text.days}</div>
-						<div className="column is-1" />
-						<div className="column is-2">{text.hours}</div>
-						<div className="column is-1" />
-						<div className="column is-2">{text.minutes}</div>
-						<div className="column is-1" />
-						<div className="column is-2">{text.seconds}</div>
+					<div className="discount__numbers">
+						<div className="discount__numbers-item">
+							<div className="discount__number">{this.pad(days)}</div>
+							<div className="discount__label">{text.days}</div>
+						</div>
+						<div>:</div>
+						<div className="discount__numbers-item">
+							<div className="discount__number">{this.pad(hrs)}</div>
+							<div className="discount__label">{text.hours}</div>
+						</div>
+						<div>:</div>
+						<div className="discount__numbers-item">
+							<div className="discount__number">{this.pad(min)}</div>
+							<div className="discount__label">{text.minutes}</div>
+						</div>
 					</div>
 				</div>
 			);
-		} else {
-			return null;
 		}
+		return null;
 	}
 }

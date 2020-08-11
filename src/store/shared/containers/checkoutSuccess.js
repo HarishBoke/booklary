@@ -5,8 +5,5 @@ import { mapStateToProps, mapDispatchToProps } from '../containerProps';
 import { CheckoutSuccessContainer } from 'theme';
 
 export default withRouter(
-	connect(
-		mapStateToProps,
-		mapDispatchToProps
-	)(CheckoutSuccessContainer)
+	connect(mapStateToProps, mapDispatchToProps)(CheckoutSuccessContainer)
 );

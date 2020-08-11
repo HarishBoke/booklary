@@ -14,20 +14,20 @@ const validateEmail = value =>
 
 const InputField = field => (
 	<div className={field.className}>
-		<label htmlFor={field.id}>
-			{field.label}
-			{field.meta.touched && field.meta.error && (
-				<span className="error">{field.meta.error}</span>
-			)}
-		</label>
 		<input
 			{...field.input}
-			placeholder={field.placeholder}
+			placeholder={field.label}
 			type={field.type}
 			id={field.id}
 			disabled={field.disabled}
 			className={field.meta.touched && field.meta.error ? 'invalid' : ''}
 		/>
+		<label htmlFor={field.id}>
+			{field.meta.touched && field.meta.error && (
+				<span className="error">{field.meta.error}</span>
+			)}
+			<span className="login__label">{field.label}</span>
+		</label>
 	</div>
 );
 
@@ -47,17 +47,11 @@ class ForgotPassword extends React.Component {
 		return field && field.status ? field.status : 'required';
 	};
 
-	isFieldOptional = fieldName => {
-		return this.getFieldStatus(fieldName) === 'optional';
-	};
+	isFieldOptional = fieldName => this.getFieldStatus(fieldName) === 'optional';
 
-	isFieldHidden = fieldName => {
-		return this.getFieldStatus(fieldName) === 'hidden';
-	};
+	isFieldHidden = fieldName => this.getFieldStatus(fieldName) === 'hidden';
 
-	isFieldDisabled = fieldName => {
-		return this.getFieldStatus(fieldName) === 'disabled';
-	};
+	isFieldDisabled = fieldName => this.getFieldStatus(fieldName) === 'disabled';
 
 	getFieldValidators = fieldName => {
 		const isOptional = this.isFieldOptional(fieldName);
@@ -83,17 +77,16 @@ class ForgotPassword extends React.Component {
 		const field = this.getField(fieldName);
 		if (field && field.label && field.label.length > 0) {
 			return field.label;
-		} else {
-			switch (fieldName) {
-				case 'email':
-					return text.email;
-					break;
-				case 'password':
-					return text.password;
-					break;
-				default:
-					return 'Unnamed field';
-			}
+		}
+		switch (fieldName) {
+			case 'email':
+				return text.email;
+				break;
+			case 'password':
+				return text.password;
+				break;
+			default:
+				return 'Unnamed field';
 		}
 	};
 
@@ -107,17 +100,17 @@ class ForgotPassword extends React.Component {
 	render() {
 		const { handleSubmit, forgotPasswordProperties } = this.props;
 
-		const inputClassName = 'login-input-field';
-		const loginTitleClassName = 'login-title';
+		const inputClassName = 'login__input-field';
+		const loginTitleClassName = 'login__title';
 		const sendPasswordSuccessTitleClassName = 'send-password-success-title';
 		const sendPasswordFailedTitleClassName = 'send-password-failed-title';
-		const loginButtonClass = 'account-button button';
+		const loginButtonClass = 'login__button button button_login';
 		return (
-			<div className="login-container">
-				<form onSubmit={handleSubmit} className="login-form">
-					<div className="login-section">
+			<section className="login-container section-container">
+				<div className="login__section">
+					<form onSubmit={handleSubmit} className="login-form">
 						<h1 className={loginTitleClassName}>{text.forgot_password}</h1>
-						<p className={loginTitleClassName}>
+						<p className="login__text_guest">
 							{forgotPasswordProperties === undefined
 								? text.forgot_password_subtitle
 								: ''}
@@ -154,21 +147,20 @@ class ForgotPassword extends React.Component {
 							validate={this.getFieldValidators('email')}
 							placeholder={this.getFieldPlaceholder('email')}
 						/>
-						<div className="login-button-wrap">
-							<button
-								type="submit"
-								className={loginButtonClass}
-								disabled={
-									forgotPasswordProperties !== undefined &&
-									forgotPasswordProperties.status
-								}
-							>
-								{text.forgot_password_submit}
-							</button>
-						</div>
-					</div>
-				</form>
-			</div>
+
+						<button
+							type="submit"
+							className={loginButtonClass}
+							disabled={
+								forgotPasswordProperties !== undefined &&
+								forgotPasswordProperties.status
+							}
+						>
+							{text.forgot_password_submit}
+						</button>
+					</form>
+				</div>
+			</section>
 		);
 	}
 }

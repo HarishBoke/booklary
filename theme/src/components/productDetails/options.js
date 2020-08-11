@@ -16,8 +16,8 @@ const Option = ({ option, onChange }) => {
 
 	return (
 		<div className="product-option">
-			<div className="product-option-name">{option.name}</div>
-			<span className="select is-fullwidth">
+			<div className="product__title product-option__name">{option.name}</div>
+			<span className="product-option__select select is-fullwidth">
 				<select
 					onChange={e => {
 						onChange(option.id, e.target.value);
@@ -37,9 +37,8 @@ const Options = ({ options, onChange }) => {
 			<Option key={index} option={option} onChange={onChange} />
 		));
 
-		return <div className="product-options">{items}</div>;
-	} else {
-		return null;
+		return <div className="product__options">{items}</div>;
 	}
+	return null;
 };
 export default Options;

@@ -10,13 +10,7 @@ const LoginContainer = props => {
 
 	return (
 		<Fragment>
-			<section className="section">
-				<div className="container">
-					<div className="content">
-						<Login {...props} />
-					</div>
-				</div>
-			</section>
+			<Login {...props} />
 		</Fragment>
 	);
 };

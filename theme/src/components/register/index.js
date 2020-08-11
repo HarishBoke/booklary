@@ -41,9 +41,9 @@ export default class RegisterForm extends React.Component {
 		}
 
 		const {
-			checkoutInputClass = 'checkout-field',
-			checkoutButtonClass = 'checkout-button',
-			checkoutEditButtonClass = 'checkout-button-edit'
+			checkoutInputClass = 'checkout__field',
+			checkoutButtonClass = 'checkout__button button',
+			checkoutEditButtonClass = 'checkout__button_edit button'
 		} = themeSettings;
 
 		return (

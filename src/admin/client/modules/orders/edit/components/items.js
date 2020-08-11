@@ -193,7 +193,10 @@ export class OrderItem extends React.Component {
 		const price = helper.formatCurrency(item.price, settings);
 		const priceTotal = helper.formatCurrency(item.price_total, settings);
 		const discountTotal = helper.formatCurrency(item.discount_total, settings);
-		const imageUrl = product && product.images && product.images.length > 0 ? product.images[0].url : null;
+		const imageUrl =
+			product && product.images && product.images.length > 0
+				? product.images[0].url
+				: null;
 		const thumbnailUrl = helper.getThumbnailUrl(imageUrl, 100);
 		const productOptions = product ? product.options : [];
 
@@ -227,10 +230,9 @@ export class OrderItem extends React.Component {
 			<div>
 				<div className={style.item + ' row row--no-gutter middle-xs'}>
 					<div className="col-xs-2">
-						{thumbnailUrl &&
-							thumbnailUrl !== '' && (
-								<img src={thumbnailUrl} className={style.itemImage} />
-							)}
+						{thumbnailUrl && thumbnailUrl !== '' && (
+							<img src={thumbnailUrl} className={style.itemImage} />
+						)}
 					</div>
 					<div className={style.itemName + ' col-xs-4'}>
 						<Link to={`/admin/product/${item.product_id}`}>{item.name}</Link>

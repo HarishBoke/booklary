@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
-import { themeSettings, text } from '../../lib/settings';
 import Lscache from 'lscache';
+import { themeSettings, text } from '../../lib/settings';
 import * as helper from '../../lib/helper';
 
 const CartItem = ({ item, deleteCartItem, settings }) => {
@@ -10,32 +10,41 @@ const CartItem = ({ item, deleteCartItem, settings }) => {
 		themeSettings.cartThumbnailWidth
 	);
 
+	let price = item.price_total;
+	if (Lscache.get('auth_data')) {
+		price = price * 0.7;
+	}
+
 	return (
-		<div className="columns is-mobile">
-			<div className="column is-2">
-				<div className="image">
+		<div className="cart__item cart-item">
+			<div className="cart-item__details">
+				<div className="cart-item__image">
 					<NavLink to={item.path}>
-						<img src={thumbnail} />
+						<div
+							className="cart-item__img"
+							style={{ backgroundImage: `url(${thumbnail})` }}
+						/>
 					</NavLink>
 				</div>
-			</div>
-			<div className="column">
-				<div>
+				<div className="cart-item__name">
 					<NavLink to={item.path}>{item.name}</NavLink>
 				</div>
-				{item.variant_name.length > 0 && (
-					<div className="cart-option-name">{item.variant_name}</div>
-				)}
-				<div className="cart-quantity">
-					{text.qty}: {item.quantity}
+				<div className="cart-item__options cart-options">
+					{item.variant_name.length > 0 && (
+						<div className="cart-options__name">{item.variant_name}</div>
+					)}
+					<div className="cart-options__name">
+						{text.qty}: {item.quantity}
+					</div>
 				</div>
 			</div>
-			<div className="column is-4 has-text-right">
-				<div className="mini-cart-item-price">
-					{helper.formatCurrency(item.price_total, settings)}
+
+			<div className="cart-item__functions">
+				<div className="cart-item__price">
+					{helper.formatCurrency(price, settings)}
 				</div>
 				<a
-					className="button is-light is-small"
+					className="cart-item__button button button_light button_cart-delete"
 					onClick={() => deleteCartItem(item.id)}
 				>
 					{text.remove}
@@ -60,34 +69,25 @@ export default class Cart extends React.PureComponent {
 			));
 
 			return (
-				<div className="mini-cart">
+				<Fragment>
+					<div className="cart__title">{text.orderSummary}</div>
 					{items}
-					<hr className="separator" />
-					<div className="columns is-mobile is-gapless">
-						<div className="column is-7">
-							<b>{text.subtotal}</b>
-						</div>
-						<div className="column is-5 has-text-right">
-							<b>{helper.formatCurrency(cart.subtotal, settings)}</b>
-						</div>
-					</div>
+
 					<NavLink
-						className="button is-primary is-fullwidth has-text-centered"
-						style={{ textTransform: 'uppercase' }}
+						className="cart__button button button_cart"
 						to={{
-							pathname:
-								Lscache.get('auth_data') !== null ? '/checkout' : '/login',
+							pathname: '/checkout',
 							state: { cartLayer: true }
 						}}
 						onClick={cartToggle}
 					>
 						{text.proceedToCheckout}
 					</NavLink>
-				</div>
+				</Fragment>
 			);
 		}
 		return (
-			<div className="mini-cart">
+			<div>
 				<p>{text.cartEmpty}</p>
 			</div>
 		);

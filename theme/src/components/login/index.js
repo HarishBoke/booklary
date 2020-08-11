@@ -27,7 +27,7 @@ export default class LoginForm extends React.Component {
 			email: values.email,
 			password: AuthHeader.encodeUserPassword(values.password),
 			history: this.props.history,
-			cartLayer: cartLayer
+			cartLayer
 		});
 	};
 
@@ -40,20 +40,21 @@ export default class LoginForm extends React.Component {
 
 		if (this.props.state.customerProperties !== undefined) {
 			if (this.props.state.customerProperties.authenticated) {
-				const expiryMilliseconds = 1000; //time units is seconds
+				const expiryMilliseconds = 1000; // time units is seconds
 				Lscache.setExpiryMilliseconds(expiryMilliseconds);
 				Lscache.set(
 					'auth_data',
 					this.props.state.customerProperties.token,
 					6000
 				);
+				// Lscache.set('customer_data', this.props.state.customerProperties, 6000);
 			}
 		}
 
 		const {
-			checkoutInputClass = 'checkout-field',
-			checkoutButtonClass = 'checkout-button',
-			checkoutEditButtonClass = 'checkout-button-edit'
+			checkoutInputClass = 'checkout__field',
+			checkoutButtonClass = 'checkout__button button',
+			checkoutEditButtonClass = 'checkout__button_edit'
 		} = themeSettings;
 
 		return (
@@ -64,7 +65,7 @@ export default class LoginForm extends React.Component {
 				settings={settings}
 				customerProperties={customerProperties}
 				cartlayerBtnInitialized={cartlayerBtnInitialized}
-				readOnly={true}
+				readOnly
 				onSubmit={this.handleFormSubmit}
 			/>
 		);

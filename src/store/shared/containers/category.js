@@ -5,8 +5,5 @@ import { mapStateToProps, mapDispatchToProps } from '../containerProps';
 import { CategoryContainer } from 'theme';
 
 export default withRouter(
-	connect(
-		mapStateToProps,
-		mapDispatchToProps
-	)(CategoryContainer)
+	connect(mapStateToProps, mapDispatchToProps)(CategoryContainer)
 );

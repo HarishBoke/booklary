@@ -11,13 +11,7 @@ const ProductList = ({
 	hasMore,
 	loadingProducts,
 	loadingMoreProducts,
-	isCentered,
-	className = 'columns is-multiline is-mobile products',
-	columnCountOnMobile,
-	columnCountOnTablet,
-	columnCountOnDesktop,
-	columnCountOnWidescreen,
-	columnCountOnFullhd
+	className = 'products products_list'
 }) => {
 	const items = products
 		? products.map(product => (
@@ -26,24 +20,13 @@ const ProductList = ({
 					product={product}
 					addCartItem={addCartItem}
 					settings={settings}
-					columnCountOnMobile={columnCountOnMobile}
-					columnCountOnTablet={columnCountOnTablet}
-					columnCountOnDesktop={columnCountOnDesktop}
-					columnCountOnWidescreen={columnCountOnWidescreen}
-					columnCountOnFullhd={columnCountOnFullhd}
 				/>
 		  ))
 		: null;
 
 	return (
 		<Fragment>
-			<div
-				className={
-					className +
-					(loadingProducts ? ' loading' : '') +
-					(isCentered ? ' is-centered' : '')
-				}
-			>
+			<div className={className + (loadingProducts ? ' loading' : '')}>
 				{items}
 			</div>
 			<div className="load-more">

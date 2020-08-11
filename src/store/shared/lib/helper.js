@@ -52,4 +52,3 @@ export const getParentIds = (categories, categoryId) => {
 
 	return parentIds;
 };
-

@@ -10,13 +10,7 @@ const ResetPasswordContainer = props => {
 
 	return (
 		<Fragment>
-			<section className="section">
-				<div className="container">
-					<div className="content">
-						<ResetPassword {...props} />
-					</div>
-				</div>
-			</section>
+			<ResetPassword {...props} />
 		</Fragment>
 	);
 };

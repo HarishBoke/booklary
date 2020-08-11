@@ -20,8 +20,16 @@ export default class Quantity extends React.PureComponent {
 	};
 
 	setQuantity = quantity => {
-		const intQuantity = parseInt(quantity);
+		let intQuantity = quantity;
+		this.setState({
+			quantity
+		});
 		if (intQuantity > 0 && intQuantity <= this.props.maxQuantity) {
+			intQuantity = parseInt(quantity);
+			this.setState({ quantity: intQuantity });
+			this.props.onChange(intQuantity);
+		} else if (intQuantity > this.props.maxQuantity) {
+			intQuantity = parseInt(this.props.maxQuantity);
 			this.setState({ quantity: intQuantity });
 			this.props.onChange(intQuantity);
 		}
@@ -44,10 +52,14 @@ export default class Quantity extends React.PureComponent {
 		const value = disabled ? 0 : quantity;
 
 		return (
-			<Fragment>
-				<div>{text.qty}</div>
+			<div className="product__quantity">
+				<div className="product__title">{text.qty}</div>
 				<div className="product-quantity">
-					<a className="decrement" onClick={this.decrement} />
+					<button
+						type="button"
+						className="decrement"
+						onClick={this.decrement}
+					/>
 					<input
 						value={value}
 						onChange={this.handleChange}
@@ -56,9 +68,13 @@ export default class Quantity extends React.PureComponent {
 						pattern="\d*"
 						disabled={disabled}
 					/>
-					<a className="increment" onClick={this.increment} />
+					<button
+						type="button"
+						className="increment"
+						onClick={this.increment}
+					/>
 				</div>
-			</Fragment>
+			</div>
 		);
 	}
 }

@@ -2,20 +2,20 @@ import React from 'react';
 
 const InputField = field => (
 	<div className={field.className}>
-		<label htmlFor={field.id}>
-			{field.label}
-			{field.meta.touched && field.meta.error && (
-				<span className="error">{field.meta.error}</span>
-			)}
-		</label>
 		<input
 			{...field.input}
-			placeholder={field.placeholder}
+			placeholder={field.label}
 			disabled={field.disabled}
 			type={field.type}
 			id={field.id}
 			className={field.meta.touched && field.meta.error ? 'invalid' : ''}
 		/>
+		<label htmlFor={field.id}>
+			{field.meta.touched && field.meta.error && (
+				<span className="error">{field.meta.error}</span>
+			)}
+			<span className="input__label">{field.label}</span>
+		</label>
 	</div>
 );
 

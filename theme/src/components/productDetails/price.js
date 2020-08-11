@@ -1,16 +1,17 @@
 import React from 'react';
 import * as helper from '../../lib/helper';
 import { themeSettings, text } from '../../lib/settings';
+import Lscache from 'lscache';
 
 const FormattedCurrency = ({ number, settings }) =>
 	helper.formatCurrency(number, settings);
 
 const NewAndOldPrices = ({ newPrice, oldPrice, settings }) => (
-	<div className="product-price">
-		<span className="product-new-price">
+	<div className="product__price">
+		<span className="product__price_new">
 			<FormattedCurrency settings={settings} number={newPrice} />
 		</span>
-		<del className="product-old-price">
+		<del className="product__price_old">
 			<FormattedCurrency settings={settings} number={oldPrice} />
 		</del>
 	</div>
@@ -22,7 +23,7 @@ const Price = ({ product, variant, isAllOptionsSelected, settings }) => {
 		themeSettings.details_price_size &&
 		themeSettings.details_price_size > 0
 	) {
-		priceStyle.fontSize = themeSettings.details_price_size + 'px';
+		priceStyle.fontSize = `${themeSettings.details_price_size}px`;
 	}
 	if (
 		themeSettings.details_price_color &&
@@ -44,6 +45,11 @@ const Price = ({ product, variant, isAllOptionsSelected, settings }) => {
 		oldPrice = product.regular_price;
 	}
 
+	if (Lscache.get('auth_data')) {
+		price = price * 0.7;
+		oldPrice = product.regular_price;
+	}
+
 	if (oldPrice > 0) {
 		return (
 			<NewAndOldPrices
@@ -52,13 +58,13 @@ const Price = ({ product, variant, isAllOptionsSelected, settings }) => {
 				oldPrice={oldPrice}
 			/>
 		);
-	} else {
-		return (
-			<div className="product-price" style={priceStyle}>
-				<FormattedCurrency settings={settings} number={price} />
-			</div>
-		);
 	}
+
+	return (
+		<div className="product__price" style={priceStyle}>
+			<FormattedCurrency settings={settings} number={price} />
+		</div>
+	);
 };
 
 export default Price;

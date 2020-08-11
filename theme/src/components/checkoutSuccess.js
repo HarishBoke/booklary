@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { text } from '../lib/settings';
+import { themeSettings, text } from '../lib/settings';
 import * as helper from '../lib/helper';
 
 const getCheckoutField = (checkoutFields, fieldName) => {
@@ -66,35 +66,65 @@ const ShippingFields = ({ order, shippingMethod }) => {
 };
 
 const ShippingFieldDiv = ({ label, value }) => (
-	<div className="shipping-field">
-		<label>{label}: </label>
-		{value}
+	<div className="shipping-field delivery__row">
+		<div className="delivery__col">{label}</div>
+		<div className="delivery__col delivery__col_value">{value}</div>
 	</div>
 );
 
-const OrderItem = ({ item, settings }) => (
-	<div className="columns is-mobile is-gapless checkout-success-row">
-		<div className="column is-6">
-			{item.name}
-			<br />
-			<span>{item.variant_name}</span>
+const OrderItem = ({ item, settings }) => {
+	const thumbnail = helper.getThumbnailUrl(
+		item.image_url,
+		themeSettings.cartThumbnailWidth
+	);
+	return (
+		<div className="order__item">
+			<div className="order__col">
+				<div className="order__value order__value_product cart-item">
+					<div className="cart-item__details cart-item__details_order">
+						<div
+							className="cart-item__img"
+							style={{ backgroundImage: `url(${thumbnail})` }}
+						/>
+
+						<div className="cart-item__name">
+							{item.name}
+							<div className="cart-item__options cart-options">
+								{item.variant_name.length > 0 && (
+									<div className="cart-options__name">{item.variant_name}</div>
+								)}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="order__col">
+				<div className="order__option">{text.qty}</div>
+				<div className="order__value">{item.quantity}</div>
+			</div>
+			<div className="order__col">
+				<div className="order__option">{text.price}</div>
+				<div className="order__value">
+					{helper.formatCurrency(item.price, settings)}
+				</div>
+			</div>
+
+			<div className="order__col">
+				<div className="order__option">{text.total}</div>
+				<div className="order__value">
+					{helper.formatCurrency(item.price_total, settings)}
+				</div>
+			</div>
 		</div>
-		<div className="column is-2 has-text-right">
-			{helper.formatCurrency(item.price, settings)}
-		</div>
-		<div className="column is-2 has-text-centered">{item.quantity}</div>
-		<div className="column is-2 has-text-right">
-			{helper.formatCurrency(item.price_total, settings)}
-		</div>
-	</div>
-);
+	);
+};
 
 const OrderItems = ({ items, settings }) => {
 	if (items && items.length > 0) {
 		const rows = items.map(item => (
 			<OrderItem key={item.id} item={item} settings={settings} />
 		));
-		return <div>{rows}</div>;
+		return <div className="order__body">{rows}</div>;
 	}
 	return null;
 };
@@ -108,76 +138,106 @@ const CheckoutSuccess = ({
 }) => {
 	if (order && order.items && order.items.length > 0) {
 		return (
-			<div className="checkout-success-details">
-				<h1 className="checkout-success-title">
-					<img src="/assets/images/success.svg" alt="" />
-					<br />
-					{text.checkoutSuccessTitle}
-				</h1>
+			<Fragment>
+				<section className="section-container main__header">
+					<h1 className="main__title">{text.checkoutSuccessTitle}</h1>
 
-				<div
-					dangerouslySetInnerHTML={{
-						__html: pageDetails.content
-					}}
-				/>
+					<div
+						dangerouslySetInnerHTML={{
+							__html: pageDetails.content
+						}}
+					/>
+				</section>
 
-				<hr />
+				<section className="section-container checkout-success">
+					<div className="checkout-success__delivery delivery">
+						<h2 className="delivery__title">{text.shipping}</h2>
+						<div className="delivery__table">
+							<MobileField order={order} checkoutFields={checkoutFields} />
 
-				<div className="columns" style={{ marginBottom: '3rem' }}>
-					<div className="column is-6">
-						<b>{text.shipping}</b>
-						<MobileField order={order} checkoutFields={checkoutFields} />
-						<CityField order={order} checkoutFields={checkoutFields} />
-						<ShippingFields order={order} shippingMethod={shippingMethod} />
-						<CommentsField order={order} checkoutFields={checkoutFields} />
-					</div>
+							<CityField order={order} checkoutFields={checkoutFields} />
 
-					<div className="column is-6">
-						<b>{text.orderNumber}</b>: {order.number}
-						<br />
-						<b>{text.shippingMethod}</b>: {order.shipping_method}
-						<br />
-						<b>{text.paymentMethod}</b>: {order.payment_method}
-						<br />
-					</div>
-				</div>
+							<ShippingFields order={order} shippingMethod={shippingMethod} />
 
-				<div className="columns is-mobile is-gapless checkout-success-row">
-					<div className="column is-6">
-						<b>{text.productName}</b>
-					</div>
-					<div className="column is-2 has-text-right">
-						<b>{text.price}</b>
-					</div>
-					<div className="column is-2 has-text-centered">
-						<b>{text.qty}</b>
-					</div>
-					<div className="column is-2 has-text-right">
-						<b>{text.total}</b>
-					</div>
-				</div>
-
-				<OrderItems items={order.items} settings={settings} />
-
-				<div className="columns">
-					<div className="column is-offset-7 checkout-success-totals">
-						<div>
-							<span>{text.subtotal}:</span>
-							<span>{helper.formatCurrency(order.subtotal, settings)}</span>
+							<CommentsField order={order} checkoutFields={checkoutFields} />
 						</div>
-						<div>
-							<span>{text.shipping}:</span>
-							<span>
+
+						<div className="delivery__table">
+							<div className="delivery__row">
+								<div className="delivery__col">{text.orderNumber}: </div>
+								<div className="delivery__col delivery__col_value">
+									{order.number}
+								</div>
+							</div>
+							<div className="delivery__row">
+								<div className="delivery__col">{text.shippingMethod}: </div>
+								<div className="delivery__col delivery__col_value">
+									{order.shipping_method}
+								</div>
+							</div>
+							<div className="delivery__row">
+								<div className="delivery__col">{text.paymentMethod}: </div>
+								<div className="delivery__col delivery__col_value">
+									{order.payment_method}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div className="checkout-success__order order">
+						<div className="order__table">
+							<div className="order__header">
+								<div className="order__col">{text.productName}</div>
+								<div className="order__col">{text.qty}</div>
+								<div className="order__col">{text.price}</div>
+								<div className="order__col">{text.total}</div>
+							</div>
+
+							<OrderItems items={order.items} settings={settings} />
+						</div>
+					</div>
+
+					<div className="summary summary_order">
+						{order.tax_total > 0 && order.item_tax_included && (
+							<div className="summary__row">
+								<div className="summary__col">{text.included_tax}:</div>
+								<div className="summary__col summary__col_price">
+									{helper.formatCurrency(order.tax_total, settings)}
+								</div>
+							</div>
+						)}
+
+						<div className="summary__row">
+							<div className="summary__col">{text.subtotal}:</div>
+							<div className="summary__col summary__col_price">
+								{helper.formatCurrency(order.subtotal, settings)}
+							</div>
+						</div>
+						<div className="summary__row">
+							<div className="summary__col">{text.shipping}:</div>
+							<div className="summary__col summary__col_price">
 								{helper.formatCurrency(order.shipping_total, settings)}
-							</span>
+							</div>
 						</div>
-						<div>
-							<b>{text.grandTotal}:</b>
-							<b>{helper.formatCurrency(order.grand_total, settings)}</b>
+
+						{order.tax_total > 0 && !order.item_tax_included && (
+							<div className="summary__row">
+								<div className="summary__col">{text.tax}:</div>
+								<div className="summary__col summary__col_price">
+									{helper.formatCurrency(order.tax_total, settings)}
+								</div>
+							</div>
+						)}
+
+						<div className="summary__row">
+							<div className="summary__col">{text.grandTotal}:</div>
+							<div className="summary__col summary__col_price">
+								{helper.formatCurrency(order.grand_total, settings)}
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+				</section>
+			</Fragment>
 		);
 	}
 	return <div className="has-text-centered">{text.cartEmpty}</div>;

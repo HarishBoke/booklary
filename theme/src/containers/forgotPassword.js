@@ -10,13 +10,7 @@ const ForgotPasswordContainer = props => {
 
 	return (
 		<Fragment>
-			<section className="section">
-				<div className="container">
-					<div className="content">
-						<ForgotPassword {...props} />
-					</div>
-				</div>
-			</section>
+			<ForgotPassword {...props} />
 		</Fragment>
 	);
 };

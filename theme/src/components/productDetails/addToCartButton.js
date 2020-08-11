@@ -22,75 +22,66 @@ const AddToCartButton = ({
 		buttonStyle.color = themeSettings.button_addtocart_color;
 	}
 
-	let addToCartText =
-		themeSettings.button_addtocart_text &&
-		themeSettings.button_addtocart_text.length > 0
-			? themeSettings.button_addtocart_text
-			: text.addToCart;
+	let addToCartText = 'Add To Cart';
 
 	if (product.stock_status === 'discontinued') {
 		return (
 			<button
-				className="button is-dark is-fullwidth"
+				type="button"
+				className="button is-dark"
 				style={buttonStyle}
 				disabled
 			>
 				{text.discontinued}
 			</button>
 		);
-	} else if (product.variable && variant && variant.stock_quantity > 0) {
+	}
+	if (product.variable && variant && variant.stock_quantity > 0) {
 		return (
 			<button
-				className="button is-success is-fullwidth"
+				type="button"
+				className="button"
 				style={buttonStyle}
 				onClick={addCartItem}
 			>
 				{addToCartText}
 			</button>
 		);
-	} else if (product.variable && !isAllOptionsSelected) {
+	}
+	if (product.variable && !isAllOptionsSelected) {
 		return (
-			<button
-				className="button is-success is-fullwidth"
-				style={buttonStyle}
-				disabled
-			>
+			<button type="button" className="button" style={buttonStyle} disabled>
 				{text.optionsRequired}
 			</button>
 		);
-	} else if (product.variable && !product.stock_backorder) {
+	}
+	if (product.variable && !product.stock_backorder) {
 		return (
-			<button
-				className="button is-success is-fullwidth"
-				style={buttonStyle}
-				disabled
-			>
+			<button type="button" className="button" style={buttonStyle} disabled>
 				{text.outOfStock}
 			</button>
 		);
-	} else if (product.stock_status === 'available') {
+	}
+	if (product.stock_status === 'available') {
 		return (
 			<button
-				className="button is-success is-fullwidth"
+				type="button"
+				className="button"
 				style={buttonStyle}
 				onClick={addCartItem}
 			>
 				{addToCartText}
 			</button>
 		);
-	} else if (product.stock_status === 'out_of_stock') {
+	}
+	if (product.stock_status === 'out_of_stock') {
 		return (
-			<button
-				className="button is-success is-fullwidth"
-				style={buttonStyle}
-				disabled
-			>
+			<button type="button" className="button" style={buttonStyle} disabled>
 				{text.outOfStock}
 			</button>
 		);
-	} else {
-		return null;
 	}
+	return null;
 };
 
 export default AddToCartButton;

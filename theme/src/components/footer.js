@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { themeSettings, text } from '../lib/settings';
+import storeSettings from '../../../config/store';
 
 class FooterMenu extends React.Component {
 	constructor(props) {
@@ -23,24 +24,15 @@ class FooterMenu extends React.Component {
 
 		if (items && items.length > 0) {
 			ulItems = items.map((item, index) => (
-				<li key={index}>
+				<li className="footer-menu__link" key={index}>
 					<NavLink to={item.url || ''}>{item.text}</NavLink>
 				</li>
 			));
 		}
 
 		return (
-			<div className="column is-3">
-				<div
-					className={
-						'footer-title mobile-padding' +
-						(this.state.isActive ? ' footer-menu-open' : '')
-					}
-					onClick={this.isActiveToggle}
-				>
-					{title}
-					<span />
-				</div>
+			<div>
+				<div className={`footer__title`}>{title}</div>
 				<ul className="footer-menu">{ulItems}</ul>
 			</div>
 		);
@@ -59,10 +51,9 @@ const SocialIcons = ({ icons }) => {
 				className={icon.type}
 			/>
 		));
-		return <p className="social-icons">{items}</p>;
-	} else {
-		return null;
+		return <div className="social-icons">{items}</div>;
 	}
+	return null;
 };
 
 const Contacts = ({ contacts }) => {
@@ -72,17 +63,30 @@ const Contacts = ({ contacts }) => {
 			if (contact && contact.indexOf('@') > 0) {
 				return (
 					<li key={index}>
-						<a href={'mailto:' + contact}>{contact}</a>
+						<a href={`mailto:${contact}`}>{contact}</a>
 					</li>
 				);
-			} else {
-				return <li key={index}>{contact}</li>;
 			}
+			if (
+				contact &&
+				(contact.indexOf('+1') == 0 || contact.indexOf('1') == 0)
+			) {
+				let contactTel = contact;
+				let re1 = new RegExp(/[-()\s/\\]/g);
+				contactTel = contactTel.replace(re1, '');
+				return (
+					<li key={index}>
+						<a className="footer-contacts__phone" href={`tel:${contactTel}`}>
+							{contact}
+						</a>
+					</li>
+				);
+			}
+			return <li key={index}>{contact}</li>;
 		});
 		return <ul className="footer-contacts">{items}</ul>;
-	} else {
-		return null;
 	}
+	return null;
 };
 
 export default class Footer extends React.PureComponent {
@@ -93,43 +97,25 @@ export default class Footer extends React.PureComponent {
 	render() {
 		const { settings } = this.props;
 		const footerLogoUrl =
-			themeSettings.footer_logo_url && themeSettings.footer_logo_url.length > 0
-				? '/assets/images/' + themeSettings.footer_logo_url
-				: settings.logo;
+			settings.logo && settings.logo.length > 0 ? settings.logo : null;
 
 		return (
-			<section className="section section-footer">
-				<hr />
-				<footer>
-					<div className="container">
-						<div className="content">
-							<div className="columns is-gapless">
-								<div className="column is-5">
-									<div className="mobile-padding">
-										<div className="footer-logo">
-											<img src={footerLogoUrl} alt="logo" />
-										</div>
-										<p>
-											<small>{themeSettings.footer_about}</small>
-										</p>
-										<Contacts contacts={themeSettings.footer_contacts} />
-										<SocialIcons icons={themeSettings.footer_social} />
-									</div>
-								</div>
-								<div className="column is-1 is-hidden-mobile" />
-								<FooterMenu
-									title={themeSettings.footer_menu_1_title}
-									items={themeSettings.footer_menu_1_items}
-								/>
-								<FooterMenu
-									title={themeSettings.footer_menu_2_title}
-									items={themeSettings.footer_menu_2_items}
-								/>
-							</div>
-						</div>
-					</div>
-				</footer>
-			</section>
+			<footer className="footer">
+				<div className="footer__contacts">
+					<div className="footer__title">Contacts</div>
+					<Contacts contacts={themeSettings.footer_contacts} />
+				</div>
+				<div className="footer__socials">
+					<div className="footer__title">Social Networks</div>
+					<SocialIcons icons={themeSettings.footer_social} />
+				</div>
+				<div className="footer__menu">
+					<FooterMenu
+						title={themeSettings.footer_menu_1_title}
+						items={themeSettings.footer_menu_1_items}
+					/>
+				</div>
+			</footer>
 		);
 	}
 }

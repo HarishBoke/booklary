@@ -7,6 +7,7 @@ import ProductFilter from '../components/productFilter';
 import Sort from '../components/sort';
 import CategoryBreadcrumbs from '../components/categoryBreadcrumbs';
 import * as helper from '../lib/helper';
+import BannerAside from '../components/bannerAside';
 
 const getFilterAttributesSummary = productFilter => {
 	let attributesSummary = '';
@@ -34,22 +35,16 @@ const getFilterPriceSummary = (productFilter, settings) => {
 };
 
 const CategoryHero = ({ categoryDetails, categories }) => (
-	<section className="hero is-light">
-		<div className="hero-body">
-			<div className="container">
-				{themeSettings.show_category_breadcrumbs && (
-					<CategoryBreadcrumbs
-						currentCategory={categoryDetails}
-						categories={categories}
-					/>
-				)}
-				<h1 className="category-title">{categoryDetails.name}</h1>
-				<div
-					className="category-description is-hidden-mobile content"
-					dangerouslySetInnerHTML={{ __html: categoryDetails.description }}
-				/>
-			</div>
-		</div>
+	<section className="main__header category-header section-container">
+		{themeSettings.show_category_breadcrumbs && (
+			<CategoryBreadcrumbs
+				currentCategory={categoryDetails}
+				categories={categories}
+			/>
+		)}
+		<h1 className="main__title category-header__title">
+			{categoryDetails.name}
+		</h1>
 	</section>
 );
 
@@ -105,37 +100,21 @@ const CategoryContainer = props => {
 
 			<CategoryHero categoryDetails={categoryDetails} categories={categories} />
 
-			<section className="section section-category">
-				<div className="container">
-					<div className="columns">
-						{showFilter === true && (
-							<div className="column is-one-quarter left-sidebar">
-								<ProductFilter {...props} />
-							</div>
-						)}
-
-						<div className="column">
-							<div className="columns is-hidden-mobile">
-								<div className="column" />
-								<div className="column is-5">
-									<Sort
-										defaultSort={settings.default_product_sorting}
-										currentSort={productFilter.sort}
-										setSort={setSort}
-									/>
-								</div>
-							</div>
-							<ProductList
-								products={products}
-								addCartItem={addCartItem}
-								settings={settings}
-								loadMoreProducts={loadMoreProducts}
-								hasMore={productsHasMore}
-								loadingProducts={loadingProducts}
-								loadingMoreProducts={loadingMoreProducts}
-							/>
-						</div>
-					</div>
+			<section className="category section-container">
+				<div className="category__aside">
+					{showFilter === true && <ProductFilter {...props} />}
+					<BannerAside />
+				</div>
+				<div className="category__products">
+					<ProductList
+						products={products}
+						addCartItem={addCartItem}
+						settings={settings}
+						loadMoreProducts={loadMoreProducts}
+						hasMore={productsHasMore}
+						loadingProducts={loadingProducts}
+						loadingMoreProducts={loadingMoreProducts}
+					/>
 				</div>
 			</section>
 		</Fragment>

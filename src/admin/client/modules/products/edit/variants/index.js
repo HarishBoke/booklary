@@ -69,8 +69,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 export default withRouter(
-	connect(
-		mapStateToProps,
-		mapDispatchToProps
-	)(ProductVariantsGrid)
+	connect(mapStateToProps, mapDispatchToProps)(ProductVariantsGrid)
 );

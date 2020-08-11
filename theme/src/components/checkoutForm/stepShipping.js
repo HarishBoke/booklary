@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { themeSettings, text } from '../../lib/settings';
 import InputField from './inputField';
 import TextareaField from './textareaField';
+import InputFieldMobile from './inputFieldMobile';
 
 const validateRequired = value =>
 	value && value.length > 0 ? undefined : text.required;
@@ -10,33 +11,17 @@ const validateRequired = value =>
 const getFieldLabelByKey = key => {
 	switch (key) {
 		case 'full_name':
-			if (typeof text.fullName !== 'undefined' && text.fullName != null)
-				return text.fullName;
-			return '';
+			return text.full_name;
 		case 'address1':
-			if (typeof text.address1 !== 'undefined' && text.address1 != null)
-				return text.address1;
-			return '';
+			return text.address1;
 		case 'address2':
-			if (typeof text.address2 !== 'undefined' && text.address2 != null)
-				return text.address2;
-			return '';
+			return text.address2;
 		case 'postal_code':
-			if (typeof text.postal_code !== 'undefined' && text.postal_code != null)
-				return text.postal_code;
-			return '';
+			return text.postal_code;
 		case 'phone':
-			if (typeof text.phone !== 'undefined' && text.phone != null)
-				return text.phone;
-			return '';
-		case 'mobile':
-			if (typeof text.mobile !== 'undefined' && text.mobile != null)
-				return text.mobile;
-			return '';
+			return text.phone;
 		case 'company':
-			if (typeof text.company !== 'undefined' && text.company != null)
-				return text.company;
-			return '';
+			return text.company;
 		default:
 			return '';
 	}
@@ -82,6 +67,7 @@ class CheckoutStepShipping extends React.Component {
 			editButtonClassName,
 			title,
 			show,
+			step,
 			isReadOnly,
 			showPaymentForm,
 			onEdit
@@ -109,15 +95,16 @@ class CheckoutStepShipping extends React.Component {
 
 		if (!show) {
 			return (
-				<div className="checkout-step">
-					<h1>
-						<span>2</span>
-						{title}
-					</h1>
+				<div>
+					{step > 1 && (
+						<div className="checkout__step step">
+							<div className="step__num step__num_inactive">2</div>
+							<h2 className="step__title step__title_inactive">{title}</h2>
+						</div>
+					)}
 				</div>
 			);
-		}
-		if (isReadOnly) {
+		} else if (isReadOnly) {
 			let shippingFields = null;
 			if (
 				shippingMethod &&
@@ -129,162 +116,168 @@ class CheckoutStepShipping extends React.Component {
 					const fieldValue = initialValues.shipping_address[field.key];
 
 					return (
-						<div key={index} className="checkout-field-preview">
-							<div className="name">{fieldLabel}</div>
-							<div className="value">{fieldValue}</div>
+						<div key={index} className="checkout__field-preview field-preview">
+							<div className="field-preview__name">{fieldLabel}</div>
+							<div className="field-preview__value">{fieldValue}</div>
 						</div>
 					);
 				});
 			}
 
 			return (
-				<div className="checkout-step">
-					<h1>
-						<span>2</span>
-						{title}
-					</h1>
+				<div className="checkout__step step">
+					<div className="step__num">2</div>
+					<h2 className="step__title">{title}</h2>
 					{shippingFields}
 
 					{!hideCommentsField && initialValues.comments !== '' && (
-						<div className="checkout-field-preview">
-							<div className="name">{commentsFieldLabel}</div>
-							<div className="value">{initialValues.comments}</div>
+						<div className="checkout__field-preview field-preview">
+							<div className="field-preview__name">{commentsFieldLabel}</div>
+							<div className="field-preview__value">
+								{initialValues.comments}
+							</div>
 						</div>
 					)}
 
-					<div className="checkout-button-wrap">
-						<button
-							type="button"
-							onClick={onEdit}
-							className={editButtonClassName}
-						>
-							{text.edit}
-						</button>
-					</div>
+					<button
+						type="button"
+						onClick={onEdit}
+						className={editButtonClassName}
+					>
+						{text.edit}
+					</button>
 				</div>
 			);
-		}
-		let shippingFields = null;
-		if (
-			shippingMethod &&
-			shippingMethod.fields &&
-			shippingMethod.fields.length > 0
-		) {
-			shippingFields = shippingMethod.fields.map((field, index) => {
-				const fieldLabel = getFieldLabel(field);
-				const fieldId = `shipping_address.${field.key}`;
-				const fieldClassName = `${inputClassName} shipping-${field.key}`;
-				const validate = field.required === true ? validateRequired : null;
+		} else {
+			let shippingFields = null;
+			if (
+				shippingMethod &&
+				shippingMethod.fields &&
+				shippingMethod.fields.length > 0
+			) {
+				shippingFields = shippingMethod.fields.map((field, index) => {
+					const fieldLabel = getFieldLabel(field);
+					const fieldId = `shipping_address.${field.key}`;
+					const fieldClassName = `${inputClassName} shipping-${field.key}`;
+					const validate = field.required === true ? validateRequired : null;
 
-				return (
-					<Field
-						key={index}
-						className={fieldClassName}
-						name={fieldId}
-						id={fieldId}
-						component={InputField}
-						type="text"
-						label={fieldLabel}
-						validate={validate}
-					/>
-				);
-			});
-		}
-
-		return (
-			<div className="checkout-step">
-				<h1>
-					<span>2</span>
-					{title}
-				</h1>
-				<form onSubmit={handleSubmit}>
-					{shippingFields}
-
-					{!hideCommentsField && (
+					return (
 						<Field
-							className={`${inputClassName} shipping-comments`}
-							name="comments"
-							id="customer.comments"
-							component={TextareaField}
+							key={index}
+							className={fieldClassName}
+							name={fieldId}
+							id={fieldId}
+							component={InputField}
 							type="text"
-							label={commentsFieldLabel}
-							placeholder={commentsFieldPlaceholder}
-							validate={commentsValidate}
-							rows="3"
+							label={fieldLabel}
+							validate={validate}
 						/>
-					)}
+					);
+				});
+			}
 
-					{!hideBillingAddress && (
-						<div>
-							<h2>{text.billingAddress}</h2>
-							<div className="billing-as-shipping">
-								<input
-									id="billingAsShipping"
-									type="checkbox"
-									onChange={this.onChangeBillingAsShipping}
-									checked={this.state.billingAsShipping}
+			return (
+				<div className="checkout__step step">
+					<div className="step__num">2</div>
+					<h2 className="step__title">{title}</h2>
+					<form onSubmit={handleSubmit}>
+						<div className="step__delivery">
+							{shippingFields}
+
+							{!hideCommentsField && (
+								<Field
+									className={`${inputClassName} shipping-comments`}
+									name="comments"
+									id="customer.comments"
+									component={TextareaField}
+									type="text"
+									label={commentsFieldLabel}
+									placeholder={commentsFieldPlaceholder}
+									validate={commentsValidate}
+									rows="3"
 								/>
-								<label htmlFor="billingAsShipping">{text.sameAsShipping}</label>
-							</div>
-
-							{!this.state.billingAsShipping && (
-								<div>
-									<Field
-										className={`${inputClassName} billing-fullname`}
-										name="billing_address.full_name"
-										id="billing_address.full_name"
-										component={InputField}
-										type="text"
-										label={text.fullName}
-										validate={[validateRequired]}
-									/>
-									<Field
-										className={`${inputClassName} billing-address1`}
-										name="billing_address.address1"
-										id="billing_address.address1"
-										component={InputField}
-										type="text"
-										label={text.address1}
-										validate={[validateRequired]}
-									/>
-									<Field
-										className={`${inputClassName} billing-address2`}
-										name="billing_address.address2"
-										id="billing_address.address2"
-										component={InputField}
-										type="text"
-										label={`${text.address2} (${text.optional})`}
-									/>
-									<Field
-										className={`${inputClassName} billing-postalcode`}
-										name="billing_address.postal_code"
-										id="billing_address.postal_code"
-										component={InputField}
-										type="text"
-										label={`${text.postal_code} (${text.optional})`}
-									/>
-									<Field
-										className={`${inputClassName} billing-phone`}
-										name="billing_address.phone"
-										id="billing_address.phone"
-										component={InputField}
-										type="text"
-										label={`${text.phone} (${text.optional})`}
-									/>
-									<Field
-										className={`${inputClassName} billing-company`}
-										name="billing_address.company"
-										id="billing_address.company"
-										component={InputField}
-										type="text"
-										label={`${text.company} (${text.optional})`}
-									/>
-								</div>
 							)}
 						</div>
-					)}
 
-					<div className="checkout-button-wrap">
+						{!hideBillingAddress && (
+							<div className="step__variants step__variants_shipping">
+								<h3 className="step__variants-title">{text.billingAddress}</h3>
+								<div className="variants billing-as-shipping">
+									<label
+										className={`input__checkbox ${
+											this.state.billingAsShipping
+												? 'input__checkbox_checked'
+												: ''
+										}`}
+										htmlFor="billingAsShipping"
+									>
+										{text.sameAsShipping}
+										<input
+											id="billingAsShipping"
+											type="checkbox"
+											onChange={this.onChangeBillingAsShipping}
+											checked={this.state.billingAsShipping}
+										/>
+									</label>
+								</div>
+
+								{!this.state.billingAsShipping && (
+									<div>
+										<Field
+											className={inputClassName + ' billing-fullname'}
+											name="billing_address.full_name"
+											id="billing_address.full_name"
+											component={InputField}
+											type="text"
+											label={text.full_name}
+											validate={[validateRequired]}
+										/>
+										<Field
+											className={inputClassName + ' billing-address1'}
+											name="billing_address.address1"
+											id="billing_address.address1"
+											component={InputField}
+											type="text"
+											label={text.address1}
+											validate={[validateRequired]}
+										/>
+										<Field
+											className={inputClassName + ' billing-address2'}
+											name="billing_address.address2"
+											id="billing_address.address2"
+											component={InputField}
+											type="text"
+											label={text.address2 + ` (${text.optional})`}
+										/>
+										<Field
+											className={`${inputClassName} billing-postalcode`}
+											name="billing_address.postal_code"
+											id="billing_address.postal_code"
+											component={InputField}
+											type="text"
+											label={`${text.postal_code} (${text.optional})`}
+										/>
+										<Field
+											className={`${inputClassName} billing-phone`}
+											name="billing_address.phone"
+											id="billing_address.phone"
+											component={InputFieldMobile}
+											type="text"
+											label={`${text.phone} (${text.optional})`}
+										/>
+										<Field
+											className={`${inputClassName} billing-company`}
+											name="billing_address.company"
+											id="billing_address.company"
+											component={InputField}
+											type="text"
+											label={`${text.company} (${text.optional})`}
+										/>
+									</div>
+								)}
+							</div>
+						)}
+
 						<button
 							type="submit"
 							disabled={
@@ -300,10 +293,10 @@ class CheckoutStepShipping extends React.Component {
 						>
 							{showPaymentForm ? text.next : text.orderSubmit}
 						</button>
-					</div>
-				</form>
-			</div>
-		);
+					</form>
+				</div>
+			);
+		}
 	}
 }
 

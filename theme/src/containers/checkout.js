@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import MetaTags from '../components/metaTags';
 import OrderSummary from '../components/orderSummary';
 import CheckoutForm from '../components/checkoutForm';
+import PageBreadcrumbs from '../components/breadcrumbs';
 
 const CheckoutContainer = props => {
 	const {
@@ -19,16 +20,19 @@ const CheckoutContainer = props => {
 				ogDescription={pageDetails.meta_description}
 			/>
 
-			<section className="section section-checkout">
-				<div className="container">
-					<div className="columns columns-checkout">
-						<div className="column is-5-widescreen is-offset-1-widescreen is-6-desktop">
-							<OrderSummary {...props} />
-						</div>
-						<div className="column is-6-widescreen is-6-desktop">
-							<CheckoutForm {...props} />
-						</div>
-					</div>
+			<section className="main__header section-container">
+				<PageBreadcrumbs
+					page={pageDetails.meta_title}
+					path={pageDetails.path}
+				/>
+				<h1 className="main__title checkout__title">Checkout</h1>
+			</section>
+			<section className="checkout section-container">
+				<div className="checkout__form checkout-form">
+					<CheckoutForm {...props} />
+				</div>
+				<div className="checkout__order checkout-order">
+					<OrderSummary {...props} />
 				</div>
 			</section>
 		</Fragment>

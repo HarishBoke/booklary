@@ -53,20 +53,20 @@ const ShippingAddress = ({ order, settings }) => {
 		<div className={style.address} style={{ marginBottom: 20 }}>
 			<ShippingFields order={order} shippingMethod={shippingMethod} />
 			<div className={style.address}>
-					<div>{address.full_name}</div>
-					<div>{address.company}</div>
-					<div>{address.address1}</div>
-					<div>{address.address2}</div>
-					<div>
-						{address.city},{' '}
-						{address.state && address.state.length > 0
-							? address.state + ', '
-							: ''}
-						{address.postal_code}
-					</div>
-					<div>{address.country}</div>
-					<div>{address.phone}</div>
+				<div>{address.full_name}</div>
+				<div>{address.company}</div>
+				<div>{address.address1}</div>
+				<div>{address.address2}</div>
+				<div>
+					{address.city},{' '}
+					{address.state && address.state.length > 0
+						? address.state + ', '
+						: ''}
+					{address.postal_code}
 				</div>
+				<div>{address.country}</div>
+				<div>{address.phone}</div>
+			</div>
 		</div>
 	);
 };
@@ -164,9 +164,7 @@ export default class OrderCustomer extends React.Component {
 		const { order, settings } = this.props;
 
 		const allowEdit = order.closed === false && order.cancelled === false;
-		let mapAddress = `${order.shipping_address.address1} ${
-			order.shipping_address.city
-		} ${order.shipping_address.state} ${order.shipping_address.postal_code}`;
+		let mapAddress = `${order.shipping_address.address1} ${order.shipping_address.city} ${order.shipping_address.state} ${order.shipping_address.postal_code}`;
 		mapAddress = mapAddress.replace(/ /g, '+');
 		const mapUrl = `https://www.google.com/maps/place/${mapAddress}`;
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { themeSettings, text } from '../../lib/settings';
 import CheckoutStepContacts from './stepContacts';
 import CheckoutStepShipping from './stepShipping';
@@ -26,7 +26,7 @@ export default class CheckoutForm extends React.Component {
 	}
 
 	changeStep = step => {
-		this.setState({ step: step });
+		this.setState({ step });
 	};
 
 	handleContactsSave = () => {
@@ -66,7 +66,6 @@ export default class CheckoutForm extends React.Component {
 				this.props.loadPaymentMethods();
 			}
 		);
-
 		this.handleContactsSave();
 	};
 
@@ -144,9 +143,9 @@ export default class CheckoutForm extends React.Component {
 		} = this.props.state;
 
 		const {
-			checkoutInputClass = 'checkout-field',
-			checkoutButtonClass = 'checkout-button',
-			checkoutEditButtonClass = 'checkout-button-edit'
+			checkoutInputClass = 'checkout__field input__text-field',
+			checkoutButtonClass = 'checkout__button button',
+			checkoutEditButtonClass = 'checkout__button_edit button'
 		} = themeSettings;
 
 		if (cart && cart.items.length > 0) {
@@ -167,7 +166,7 @@ export default class CheckoutForm extends React.Component {
 			}
 
 			return (
-				<div className="checkout-form">
+				<Fragment>
 					<CheckoutStepContacts
 						isReadOnly={step > 1}
 						step={step}
@@ -186,6 +185,7 @@ export default class CheckoutForm extends React.Component {
 						checkoutFields={checkoutFields}
 						onEdit={this.handleContactsEdit}
 						onSubmit={this.handleContactsSubmit}
+						saveShippingLocation={this.handleLocationSave}
 						saveShippingMethod={this.handleShippingMethodSave}
 						savePaymentMethod={this.handlePaymentMethodSave}
 						cartlayerBtnInitialized={cartlayerBtnInitialized}
@@ -225,7 +225,7 @@ export default class CheckoutForm extends React.Component {
 							onCreateToken={this.handleCheckoutWithToken}
 						/>
 					)}
-				</div>
+				</Fragment>
 			);
 		} else {
 			return <p>{text.emptyCheckout}</p>;

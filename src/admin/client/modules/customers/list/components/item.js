@@ -40,22 +40,21 @@ const CustomersListItem = ({ customer, onSelect, selected, settings }) => {
 							</Link>
 						</div>
 						<div className={'col-xs-3 ' + style.location}>
-							{customer.shipping &&
-								customer.shipping.city && (
-									<span>
-										<FontIcon
-											style={{
-												color: 'rgba(0, 0, 0, 0.4)',
-												fontSize: 16,
-												marginRight: 6
-											}}
-											className="material-icons"
-										>
-											place
-										</FontIcon>
-										{customer.shipping.city}
-									</span>
-								)}
+							{customer.shipping && customer.shipping.city && (
+								<span>
+									<FontIcon
+										style={{
+											color: 'rgba(0, 0, 0, 0.4)',
+											fontSize: 16,
+											marginRight: 6
+										}}
+										className="material-icons"
+									>
+										place
+									</FontIcon>
+									{customer.shipping.city}
+								</span>
+							)}
 						</div>
 						<div className="col-xs-1">{customer.orders_count || 0}</div>
 						<div className="col-xs-2">

@@ -339,7 +339,7 @@ class OrderItemsService {
 	}
 
 	getValidDocumentForInsert(data) {
-		const productImage = parse.getObjectIDIfValid(data.product_id)
+		const productImage = parse.getObjectIDIfValid(data.product_id);
 		const item = {
 			product_image: [],
 			id: new ObjectID(),

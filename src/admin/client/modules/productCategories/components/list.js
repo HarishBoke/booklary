@@ -32,7 +32,7 @@ class Item extends React.PureComponent {
 	};
 
 	render() {
-		const { item, opened, selectedId, nestedItems} = this.props;
+		const { item, opened, selectedId, nestedItems } = this.props;
 		const icon = item.enabled ? FolderIcon : DraftIcon;
 		const style = item.id === selectedId ? styles.selectedItem : null;
 
@@ -88,23 +88,35 @@ export default class Categories extends React.Component {
 	handleClickAll = () => {
 		this.props.onSelect('all');
 		document.getElementsByClassName('product-list')[0].style.display = 'block';
-		if (document.getElementsByClassName('spread-sheet-container')[0] !== undefined) {
-			document.getElementsByClassName('spread-sheet-container')[0].style.display = 'none';
+		if (
+			document.getElementsByClassName('spread-sheet-container')[0] !== undefined
+		) {
+			document.getElementsByClassName(
+				'spread-sheet-container'
+			)[0].style.display = 'none';
 		}
 	};
 
 	handleClickRoot = () => {
 		this.props.onSelect('root');
 		document.getElementsByClassName('product-list')[0].style.display = 'block';
-		if (document.getElementsByClassName('spread-sheet-container')[0] !== undefined) {
-			document.getElementsByClassName('spread-sheet-container')[0].style.display = 'none';
+		if (
+			document.getElementsByClassName('spread-sheet-container')[0] !== undefined
+		) {
+			document.getElementsByClassName(
+				'spread-sheet-container'
+			)[0].style.display = 'none';
 		}
 	};
 
 	handleClickImport = () => {
 		document.getElementsByClassName('product-list')[0].style.display = 'none';
-		if (document.getElementsByClassName('spread-sheet-container')[0] !== undefined) {
-			document.getElementsByClassName('spread-sheet-container')[0].style.display = 'block';
+		if (
+			document.getElementsByClassName('spread-sheet-container')[0] !== undefined
+		) {
+			document.getElementsByClassName(
+				'spread-sheet-container'
+			)[0].style.display = 'block';
 		}
 	};
 
@@ -128,7 +140,6 @@ export default class Categories extends React.Component {
 		return (
 			<List>
 				{showRoot && (
-		
 					<ListItem
 						primaryText={rootName}
 						style={'root' === selectedId ? styles.selectedItem : null}
@@ -168,17 +179,12 @@ export default class Categories extends React.Component {
 				)}
 
 				{showImport && (
-					<Link
-						to="/admin/products/import"
-						style={{ textDecoration: 'none' }}
-					>
+					<Link to="/admin/products/import" style={{ textDecoration: 'none' }}>
 						<ListItem
 							className="treeItem"
 							primaryText={messages.drawer_importing}
 							innerDivStyle={styles.innerItem}
-							leftIcon={
-								<FontIcon className="material-icons">get_app</FontIcon>
-							}
+							leftIcon={<FontIcon className="material-icons">get_app</FontIcon>}
 							onClick={this.handleClickImport}
 						/>
 					</Link>

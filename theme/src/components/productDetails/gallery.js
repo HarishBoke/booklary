@@ -47,21 +47,26 @@ export default class Gallery extends React.Component {
 			const originalImages = images.map(image => image.url);
 			const showThumbnails = images.length > 1;
 
+			const renderItem = item => (
+				<div
+					className="image-gallery-image"
+					style={{ backgroundImage: `url(${item.original})` }}
+				/>
+			);
+
 			return (
-				<Fragment>
+				<div className="product__image">
 					<ImageGallery
 						items={imagesArray}
-						showThumbnails={showThumbnails}
+						showThumbnails={false}
 						onClick={this.openLightbox}
-						lazyLoad={true}
+						lazyLoad
 						slideInterval={2000}
 						showNav={themeSettings.product_gallery_shownav === true}
 						showBullets={showThumbnails}
 						showPlayButton={false}
 						showFullscreenButton={false}
-						slideOnThumbnailHover={true}
-						thumbnailPosition={themeSettings.product_thumbnail_position}
-						onSlide={this.setPhotoIndex}
+						renderItem={renderItem}
 					/>
 					{lightboxIsOpen && (
 						<Lightbox
@@ -92,10 +97,9 @@ export default class Gallery extends React.Component {
 							}
 						/>
 					)}
-				</Fragment>
+				</div>
 			);
-		} else {
-			return <div className="large-image-placeholder" />;
 		}
+		return <div className="large-image-placeholder" />;
 	}
 }

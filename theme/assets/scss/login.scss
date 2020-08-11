@@ -1,167 +1,94 @@
 .login-container {
-	display: flex;
-	align-items: baseline;
-	margin: auto;
-	width: auto;
+    color: $choco;
+    @media screen and (min-width: $vtablet-width) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 35px;
+    }
 }
 
-.login-container input[type='text'],
-.login-container input[type='email'],
-.login-container input[type='password'],
-.login-container textarea {
-	width: 100%;
-	border: 1px solid #e0e0e0;
-	border-radius: 3px;
-	padding: 12px 16px;
+.login__section {
+    background: #F2F1F1;
+    border-radius: 5px;
+    padding: 30px 20px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    @media screen and (min-width: $vtablet-width) {
+        display: flex;
+        width: 500px;
+        align-items: center;
+        justify-content: center;
+        padding: 70px;
+    }
+    &_with-guest {
+        @media screen and (min-width: $vtablet-width) {
+            margin-right: 70px;
+        }
+    }
+    &_guest {
+        margin-top: 30px;
+        @media screen and (min-width: $vtablet-width) {
+            margin-top: 0;
+            flex: 1;
+        }
+    }
 }
 
-.login-container input[type='text']:focus,
-.login-container input[type='email']:focus,
-.login-container input[type='password']:focus,
-.login-container textarea:focus {
-	outline: none;
-	border: 1px solid #a1a1a1;
+.login__form {
+    max-width: 270px;
+    width: 100%;
+    margin: 0 auto;
 }
 
-.login-container input[type='text'].invalid,
-.login-container input[type='email'].invalid,
-.login-container input[type='password'].invalid,
-.login-container textarea.invalid {
-	border: 1px solid #e96161;
-	background-color: rgba(233, 97, 97, 0.05);
+.login__title {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 150%;
+    text-align: center;
 }
 
-.login-container label {
-	font-size: 9pt;
-	font-weight: normal;
-	color: #747679;
-	margin-bottom: 0.5em;
-	display: block;
+.login__link {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 150%;
+    margin-top: 30px;
+    a {
+        color: $choco;
+        &:hover,
+        &:active,
+        &:focus {
+            color: $mustard;
+        }
+    }
+    @media screen and (min-width: $vtablet-width) {
+        margin-top: 20px;
+        font-size: 16px;
+        line-height: 18px;
+    }
 }
 
-.login-container .error {
-	color: #e96161;
-	padding-left: 10px;
-	font-weight: 500;
+.login__button {
+    margin-top: 20px;
+    width: 100%;
+    &:disabled {
+        display: none;
+    }
 }
 
-.register-form {
-	margin: auto;
+.login__guest {
+    max-width: 324px;
 }
 
-.login-guest-checkout,
-.login-form {
-	margin: 0 auto;
-	width: auto;
-}
-
-.login-form-with-guest {
-	margin: 0 auto;
-}
-
-.login-section-guest {
-	width: auto;
-	padding-top: 0;
-	margin-right: 0;
-}
-
-.login-button-wrap {
-	text-align: center;
-	margin-top: 30px;
-}
-
-.login-link-wrap {
-	text-align: right;
-	margin-top: 15px;
-}
-
-.login-button-style {
-	background-color: $login;
-	border-color: transparent;
-	color: #fff;
-	padding-left: 3rem;
-	padding-right: 3rem;
-	text-transform: uppercase;
-}
-
-.register-button-style {
-	background-color: $login;
-	border-color: transparent;
-	color: #fff;
-	padding-left: 3rem;
-	padding-right: 3rem;
-	text-transform: uppercase;
-}
-
-.login-input-field {
-	margin-bottom: 20px;
-}
-
-.login-title {
-	padding-top: 0;
-	margin: 0;
-}
-
-.send-password-success-title {
-	color: $green;
-}
-
-.send-password-failed-title {
-	color: $error-alert-text;
-}
-
-.login-success-title {
-	padding-top: 20px;
-	margin: 20px 0;
-	color: $green;
-}
-
-.login-section h2,
-.login-section-guest h2 {
-	padding-top: 15px;
-	text-align: center;
-}
-
-.login-button {
-	margin: 0 0 0 10px;
-}
-
-.login-icon {
-	cursor: pointer;
-}
-
-.login-name {
-	font-size: 10px;
-	text-overflow: ellipsis;
-	max-width: 40px;
-	cursor: pointer;
-}
-.login-button:active.login-name:active {
-	color: lightblue;
-}
-.login-button:hover.login-name:hover {
-	color: lightblue;
-}
-
-.fluid-fit {
-	height: 100%;
-	width: 100%;
-}
-
-.no-decor {
-	text-decoration: 'none';
-}
-
-@media screen and (max-width: 769px) {
-	.login-container {
-		align-items: baseline;
-		margin: auto;
-		width: auto;
-		display: table;
-	}
-
-	.login-section-guest {
-		padding-top: 0;
-		margin-right: 0;
-	}
+.login__text_guest,
+.success-alert-text {
+    margin: 25px 0 10px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    @media screen and (min-width: $vtablet-width) {
+        margin: 15px 0 0;
+    }
 }

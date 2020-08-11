@@ -41,7 +41,9 @@ class ImportSettingsService {
 			.countDocuments({})
 			.then(count => {
 				if (count === 0) {
-					return db.collection('importSettings').insertOne(this.defaultSettings);
+					return db
+						.collection('importSettings')
+						.insertOne(this.defaultSettings);
 				} else {
 					return;
 				}

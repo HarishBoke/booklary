@@ -18,8 +18,8 @@ export default class ForgotPasswordForm extends React.Component {
 		const { settings, forgotPasswordProperties } = this.props.state;
 
 		const {
-			checkoutInputClass = 'checkout-field',
-			checkoutButtonClass = 'checkout-button'
+			checkoutInputClass = 'checkout__field input__text-field',
+			checkoutButtonClass = 'checkout__button button'
 		} = themeSettings;
 
 		return (

@@ -93,7 +93,7 @@ export default class CustomProducts extends React.Component {
 			price_to,
 			sort,
 			fields:
-				'path,id,name,category_id,category_name,sku,images,enabled,discontinued,stock_status,stock_quantity,price,on_sale,regular_price,attributes,tags',
+				'path,id,name,category_id,category_name,sku,images,enabled,discontinued,stock_status,stock_quantity,price,on_sale,regular_price,attributes,tags,variants',
 			limit: limit || 4,
 			offset: 0
 		};

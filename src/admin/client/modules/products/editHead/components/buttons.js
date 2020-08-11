@@ -47,20 +47,19 @@ export default class Buttons extends React.Component {
 						delete
 					</FontIcon>
 				</IconButton>
-				{product &&
-					product.enabled && (
-						<a href={product.url} target="_blank">
-							<IconButton
-								touch={true}
-								tooltipPosition="bottom-left"
-								tooltip={messages.viewOnWebsite}
-							>
-								<FontIcon color="#fff" className="material-icons">
-									open_in_new
-								</FontIcon>
-							</IconButton>
-						</a>
-					)}
+				{product && product.enabled && (
+					<a href={product.url} target="_blank">
+						<IconButton
+							touch={true}
+							tooltipPosition="bottom-left"
+							tooltip={messages.viewOnWebsite}
+						>
+							<FontIcon color="#fff" className="material-icons">
+								open_in_new
+							</FontIcon>
+						</IconButton>
+					</a>
+				)}
 				<DeleteConfirmation
 					open={this.state.openDelete}
 					isSingle={true}

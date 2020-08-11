@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Lscache from 'lscache';
 import { themeSettings, text } from '../../lib/settings';
-import AuthHeader from '../../../../src/api/server/lib/auth-header';
+import AuthHeader from './../../../../src/api/server/lib/auth-header';
 import Account from './account';
 
 export default class AccountForm extends React.Component {
@@ -63,6 +63,7 @@ export default class AccountForm extends React.Component {
 			const cacheTimeStamp = localStorage.getItem(
 				'lscache-auth_data-cacheexpiration'
 			);
+
 			if (Number(cacheTimeStamp) <= Math.floor(new Date().getTime() / 1000)) {
 				Lscache.flush();
 				return (
@@ -75,9 +76,9 @@ export default class AccountForm extends React.Component {
 			}
 
 			const {
-				checkoutInputClass = 'checkout-field',
-				checkoutButtonClass = 'checkout-button',
-				checkoutEditButtonClass = 'checkout-button-edit'
+				checkoutInputClass = 'checkout__field input__text-field',
+				checkoutButtonClass = 'checkout__button button',
+				checkoutEditButtonClass = 'checkout__button_edit button'
 			} = themeSettings;
 
 			return (

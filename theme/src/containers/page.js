@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { themeSettings } from '../lib/settings';
 import MetaTags from '../components/metaTags';
 import PageList from '../components/pageList';
+import PageBreadcrumbs from '../components/breadcrumbs';
 
 const PageContainer = props => {
 	const {
@@ -24,20 +25,22 @@ const PageContainer = props => {
 				ogDescription={pageDetails.meta_description}
 			/>
 
-			<section className="section">
-				<div className="container">
-					<div className="content">
-						<div
-							className="page-content"
-							dangerouslySetInnerHTML={{
-								__html: pageDetails.content
-							}}
-						/>
-						{showPageList && (
-							<PageList tags={pageListTag} sort="-date_created" />
-						)}
-					</div>
-				</div>
+			<section className="main__header section-container">
+				<PageBreadcrumbs
+					page={pageDetails.meta_title}
+					path={pageDetails.path}
+				/>
+				<h1 className="main__title">{pageDetails.meta_title}</h1>
+			</section>
+
+			<section className="section-container page">
+				<div
+					className="page__content"
+					dangerouslySetInnerHTML={{
+						__html: pageDetails.content
+					}}
+				/>
+				{showPageList && <PageList tags={pageListTag} sort="-date_created" />}
 			</section>
 		</Fragment>
 	);

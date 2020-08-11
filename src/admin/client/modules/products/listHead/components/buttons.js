@@ -52,7 +52,14 @@ export default class Buttons extends React.Component {
 	};
 
 	render() {
-		const { search, setSearch, selectedCount, onDelete, onCreate, onImportProducts } = this.props;
+		const {
+			search,
+			setSearch,
+			selectedCount,
+			onDelete,
+			onCreate,
+			onImportProducts
+		} = this.props;
 
 		const actionsMoveTo = [
 			<FlatButton

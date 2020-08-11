@@ -46,15 +46,14 @@ const ServiceSettingsForm = ({
 					/>
 				)}
 
-				{typeof value !== 'boolean' &&
-					typeof value !== 'number' && (
-						<Field
-							component={TextField}
-							fullWidth={true}
-							name={key}
-							floatingLabelText={key}
-						/>
-					)}
+				{typeof value !== 'boolean' && typeof value !== 'number' && (
+					<Field
+						component={TextField}
+						fullWidth={true}
+						name={key}
+						floatingLabelText={key}
+					/>
+				)}
 			</div>
 		);
 	});

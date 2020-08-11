@@ -36,8 +36,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 export default withRouter(
-	connect(
-		mapStateToProps,
-		mapDispatchToProps
-	)(ProductInventoryForm)
+	connect(mapStateToProps, mapDispatchToProps)(ProductInventoryForm)
 );

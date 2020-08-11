@@ -44,7 +44,8 @@ export default class ServicesList extends React.Component {
 							color: 'rgba(0, 0, 0, 0.52)'
 						}}
 					>
-						{messages.loadFromWebstore}&nbsp;&nbsp;<Link to="/admin/apps/login">
+						{messages.loadFromWebstore}&nbsp;&nbsp;
+						<Link to="/admin/apps/login">
 							<RaisedButton label={messages.loginTitle} />
 						</Link>
 					</div>

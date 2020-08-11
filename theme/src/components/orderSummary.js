@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import Lscache from 'lscache';
 import { themeSettings, text } from '../lib/settings';
 import * as helper from '../lib/helper';
 
@@ -25,43 +26,49 @@ const SummaryItem = ({ settings, item, updateCartItemQuantiry }) => {
 		);
 	}
 
+	let price = item.price_total;
+	if (Lscache.get('auth_data')) {
+		price = price * 0.7;
+	}
+
 	return (
-		<div className="columns is-mobile">
-			<div className="column is-3">
-				<div className="image">
+		<div className="cart__item cart-item cart-item_checkout">
+			<div className="cart-item__details">
+				<div className="cart-item__image">
 					<NavLink to={item.path}>
-						<img
-							className="product-image"
-							src={thumbnail}
-							alt={item.name}
-							title={item.name}
+						<div
+							className="cart-item__img"
+							style={{ backgroundImage: `url(${thumbnail})` }}
 						/>
 					</NavLink>
 				</div>
-			</div>
-			<div className="column">
-				<div>
+				<div className="cart-item__name">
 					<NavLink to={item.path}>{item.name}</NavLink>
 				</div>
-				{item.variant_name.length > 0 && (
-					<div className="cart-option-name">{item.variant_name}</div>
-				)}
-				<div className="qty">
-					<span>{text.qty}:</span>
-					<span className="select is-small">
-						<select
-							onChange={e => {
-								updateCartItemQuantiry(item.id, e.target.value);
-							}}
-							value={item.quantity}
-						>
-							{qtyOptions}
-						</select>
-					</span>
+				<div className="cart-item__options cart-options">
+					{item.variant_name.length > 0 && (
+						<div className="cart-options__name">{item.variant_name}</div>
+					)}
+					<div className="qty cart-options__name">
+						<span className="cart-options__name_qty">{text.qty}:</span>
+						<span className="select cart-options__select">
+							<select
+								onChange={e => {
+									updateCartItemQuantiry(item.id, e.target.value);
+								}}
+								value={item.quantity}
+							>
+								{qtyOptions}
+							</select>
+						</span>
+					</div>
 				</div>
 			</div>
-			<div className="column is-3 has-text-right price">
-				{helper.formatCurrency(item.price_total, settings)}
+
+			<div className="cart-item__functions">
+				<div className="cart-item__price">
+					{helper.formatCurrency(price, settings)}
+				</div>
 			</div>
 		</div>
 	);
@@ -89,42 +96,77 @@ const OrderSummary = props => {
 			/>
 		));
 
+		let subtotal = cart.grand_total;
+		let grand_total = cart.grand_total;
+		if (Lscache.get('auth_data')) {
+			subtotal = subtotal * 0.7;
+			grand_total = grand_total - subtotal * 0.3;
+		}
+
 		return (
-			<div
-				className="checkout-box content is-small"
-				style={{ paddingBottom: 0 }}
-			>
-				<div className="title is-4">{text.orderSummary}</div>
-				<hr className="separator" />
+			<Fragment>
+				<div className="cart__title cart__title_checkout">
+					{text.orderSummary}
+				</div>
+
 				{items}
-				<div className="columns is-mobile is-gapless is-multiline summary-block">
-					<div className="column is-7">{text.subtotal}</div>
-					<div className="column is-5 has-text-right price">
-						{helper.formatCurrency(cart.subtotal, settings)}
-					</div>
-					<div className="column is-7">{text.shipping}</div>
-					<div className="column is-5 has-text-right price">
-						{helper.formatCurrency(cart.shipping_total, settings)}
-					</div>
+				<div className="cart__summary summary">
+					<div className="summary__row">
+						{cart.tax_total > 0 && cart.item_tax_included && (
+							<div className="summary__col">{text.included_tax}</div>
+						)}
 
-					{cart.discount_total > 0 && (
-						<div className="column is-7">{text.discount}</div>
-					)}
-					{cart.discount_total > 0 && (
-						<div className="column is-5 has-text-right price">
-							{helper.formatCurrency(cart.discount_total, settings)}
+						{cart.tax_total > 0 && cart.item_tax_included && (
+							<div className="summary__col summary__col_price">
+								{helper.formatCurrency(cart.tax_total, settings)}
+							</div>
+						)}
+					</div>
+					<div className="summary__row">
+						<div className="summary__col">{text.subtotal}</div>
+						<div className="summary__col summary__col_price">
+							{helper.formatCurrency(subtotal, settings)}
 						</div>
-					)}
-
-					<div className="column is-12">
-						<hr className="separator" />
 					</div>
-					<div className="column is-6 total-text">{text.grandTotal}</div>
-					<div className="column is-6 total-price">
-						{helper.formatCurrency(cart.grand_total, settings)}
+
+					<div className="summary__row">
+						<div className="summary__col">{text.shipping}</div>
+						<div className="summary__col summary__col_price">
+							{helper.formatCurrency(cart.shipping_total, settings)}
+						</div>
+					</div>
+
+					<div className="summary__row">
+						{cart.discount_total > 0 && (
+							<div className="summary__col">{text.discount}</div>
+						)}
+						{cart.discount_total > 0 && (
+							<div className="summary__col summary__col_price">
+								{helper.formatCurrency(cart.discount_total, settings)}
+							</div>
+						)}
+					</div>
+
+					<div className="summary__row">
+						{cart.tax_total > 0 && !cart.item_tax_included && (
+							<div className="summary__col">{text.tax}</div>
+						)}
+
+						{cart.tax_total > 0 && !cart.item_tax_included && (
+							<div className="summary__col summary__col_price">
+								{helper.formatCurrency(cart.tax_total, settings)}
+							</div>
+						)}
+					</div>
+
+					<div className="summary__row">
+						<div className="summary__col">{text.grandTotal}</div>
+						<div className="summary__col summary__col_price">
+							{helper.formatCurrency(grand_total, settings)}
+						</div>
 					</div>
 				</div>
-			</div>
+			</Fragment>
 		);
 	}
 	return null;

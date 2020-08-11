@@ -93,21 +93,20 @@ export class MultiSelect extends React.Component {
 
 		const elements = items.map((item, index) => (
 			<div className={`col-xs-12 col-sm-${columnsClass}`} key={index}>
-				{item &&
-					item !== '' && (
-						<ListItem
-							leftCheckbox={
-								<Checkbox
-									checked={this.isCheckboxChecked(item)}
-									disabled={disabled}
-									onCheck={(e, isChecked) => {
-										this.onCheckboxChecked(item);
-									}}
-								/>
-							}
-							primaryText={item}
-						/>
-					)}
+				{item && item !== '' && (
+					<ListItem
+						leftCheckbox={
+							<Checkbox
+								checked={this.isCheckboxChecked(item)}
+								disabled={disabled}
+								onCheck={(e, isChecked) => {
+									this.onCheckboxChecked(item);
+								}}
+							/>
+						}
+						primaryText={item}
+					/>
+				)}
 			</div>
 		));
 

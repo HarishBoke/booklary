@@ -7,7 +7,7 @@ import * as helper from '../lib/helper';
 const CategoryBreadcrumbs = ({ currentCategory, categories }) => {
 	const items = helper.getCategoryBreadcrumbs(currentCategory.id, categories);
 	return (
-		<nav className="breadcrumb is-small" aria-label="breadcrumbs">
+		<nav className="breadcrumb" aria-label="breadcrumbs">
 			<ul>
 				<li>
 					<NavLink to="/">{text.home}</NavLink>

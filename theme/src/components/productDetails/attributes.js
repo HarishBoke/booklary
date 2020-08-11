@@ -2,9 +2,9 @@ import React from 'react';
 import { themeSettings, text } from '../../lib/settings';
 
 const Attribute = ({ name, value }) => (
-	<div className="columns is-gapless is-mobile product-attribute">
-		<div className="column is-5 attribute-name">{name}:</div>
-		<div className="column is-7 attribute-value">{value}</div>
+	<div className="product-attribute">
+		<div className="product-attribute__name">{name}:</div>
+		<div className="product-attribute__value">{value}</div>
 	</div>
 );
 
@@ -15,13 +15,12 @@ const Attributes = ({ attributes }) => {
 		));
 
 		return (
-			<div className="product-attributes">
-				<div className="title is-5">{text.attributes}</div>
+			<div className="product__attributes">
+				<div className="product__title">{text.attributes}</div>
 				{items}
 			</div>
 		);
-	} else {
-		return null;
 	}
+	return null;
 };
 export default Attributes;

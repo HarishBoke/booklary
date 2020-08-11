@@ -581,5 +581,3 @@ export function uploadImages(productId, form) {
 			});
 	};
 }
-
-

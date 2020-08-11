@@ -5,7 +5,7 @@ import { themeSettings, text } from '../../lib/settings';
 const Tags = ({ tags }) => {
 	if (tags && tags.length > 0) {
 		return (
-			<div className="tags">
+			<div className="product__tags tags">
 				{tags.map((tag, index) => (
 					<span key={index} className="tag">
 						{tag}
@@ -13,9 +13,8 @@ const Tags = ({ tags }) => {
 				))}
 			</div>
 		);
-	} else {
-		return null;
 	}
+	return null;
 };
 
 export default Tags;

@@ -5,8 +5,5 @@ import { mapStateToProps, mapDispatchToProps } from '../containerProps';
 import { IndexContainer } from 'theme';
 
 export default withRouter(
-	connect(
-		mapStateToProps,
-		mapDispatchToProps
-	)(IndexContainer)
+	connect(mapStateToProps, mapDispatchToProps)(IndexContainer)
 );

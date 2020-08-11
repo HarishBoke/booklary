@@ -117,9 +117,8 @@ class ProductCategoriesService {
 				return db
 					.collection('productCategories')
 					.deleteMany({ _id: { $in: objectsToDelete } })
-					.then(
-						deleteResponse =>
-							deleteResponse.deletedCount > 0 ? idsToDelete : null
+					.then(deleteResponse =>
+						deleteResponse.deletedCount > 0 ? idsToDelete : null
 					);
 			})
 			.then(idsToDelete => {

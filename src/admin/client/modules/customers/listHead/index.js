@@ -30,7 +30,4 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Buttons);
+export default connect(mapStateToProps, mapDispatchToProps)(Buttons);

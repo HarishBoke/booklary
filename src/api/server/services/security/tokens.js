@@ -138,9 +138,8 @@ class SecurityTokensService {
 			return db
 				.collection('tokens')
 				.count({ email: email, is_revoked: false })
-				.then(
-					count =>
-						count === 0 ? email : Promise.reject('Token email must be unique')
+				.then(count =>
+					count === 0 ? email : Promise.reject('Token email must be unique')
 				);
 		} else {
 			return Promise.resolve(email);
@@ -294,9 +293,7 @@ class SecurityTokensService {
 			const device = userAgent.device.vendor
 				? userAgent.device.vendor + ' ' + userAgent.device.model + ', '
 				: '';
-			const requestFrom = `${device}${userAgent.os.name}, ${
-				userAgent.browser.name
-			}<br />
+			const requestFrom = `${device}${userAgent.os.name}, ${userAgent.browser.name}<br />
       ${date}<br />
       IP: ${ip}<br />
       ${country}`;

@@ -53,7 +53,6 @@ class HeadMenuItem extends React.Component {
 				onMouseLeave={this.onMouseLeaveHandler}
 				onMouseUp={this.onMouseLeaveHandler}
 				className={
-					(level === 2 ? 'column is-3' : '') +
 					(this.state.isActive ? ' is-active' : '') +
 					(hasItems ? ' has-items' : '')
 				}
@@ -71,11 +70,9 @@ class HeadMenuItem extends React.Component {
 				</div>
 				{hasItems && (
 					<ul
-						className={
-							(level === 1 ? 'columns is-gapless is-multiline' : '') +
-							' nav-level-' +
-							level
-						}
+						className={`${
+							level === 1 ? 'is-gapless is-multiline' : ''
+						} nav-level-${level}`}
 					>
 						{items}
 					</ul>

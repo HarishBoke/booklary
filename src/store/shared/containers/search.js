@@ -5,8 +5,5 @@ import { mapStateToProps, mapDispatchToProps } from '../containerProps';
 import { SearchContainer } from 'theme';
 
 export default withRouter(
-	connect(
-		mapStateToProps,
-		mapDispatchToProps
-	)(SearchContainer)
+	connect(mapStateToProps, mapDispatchToProps)(SearchContainer)
 );

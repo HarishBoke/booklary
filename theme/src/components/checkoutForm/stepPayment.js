@@ -18,37 +18,36 @@ const CheckoutStepPayment = props => {
 
 	const { payment_method_gateway, grand_total } = cart;
 
+	let total = grand_total;
+	if (Lscache.get('auth_data')) {
+		total = total * 0.7;
+	}
+
 	if (!show) {
 		return (
-			<div className="checkout-step">
-				<h1>
-					<span>3</span>
-					{title}
-				</h1>
+			<div className="checkout__step step">
+				<div className="step__num step__num_inactive">3</div>
+				<h2 className="step__title step__title_inactive">{title}</h2>
 			</div>
 		);
 	}
 	return (
-		<div className="checkout-step">
-			<h1>
-				<span>3</span>
-				{title}
-			</h1>
-			<div className="checkout-button-wrap">
-				{!processingCheckout && (
-					<PaymentForm
-						gateway={payment_method_gateway}
-						amount={grand_total}
-						shopSettings={settings}
-						shippingMethod={shippingMethod}
-						onPayment={handleSuccessPayment}
-						inputClassName={inputClassName}
-						buttonClassName={buttonClassName}
-						onCreateToken={onCreateToken}
-					/>
-				)}
-				{processingCheckout && <p>{text.loading}</p>}
-			</div>
+		<div className="checkout__step step">
+			<div className="step__num">3</div>
+			<h2 className="step__title">{title}</h2>
+			{!processingCheckout && (
+				<PaymentForm
+					gateway={payment_method_gateway}
+					amount={total}
+					shopSettings={settings}
+					shippingMethod={shippingMethod}
+					onPayment={handleSuccessPayment}
+					inputClassName={inputClassName}
+					buttonClassName={buttonClassName}
+					onCreateToken={onCreateToken}
+				/>
+			)}
+			{processingCheckout && <p>{text.loading}</p>}
 		</div>
 	);
 };

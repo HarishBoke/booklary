@@ -10,12 +10,8 @@ const AccountContainer = props => {
 
 	return (
 		<Fragment>
-			<section className="section">
-				<div className="container">
-					<div className="content">
-						<Account {...props} />
-					</div>
-				</div>
+			<section className="section section-container">
+				<Account {...props} />
 			</section>
 		</Fragment>
 	);

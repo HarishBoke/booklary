@@ -96,7 +96,8 @@ class CustomerAddress extends React.Component {
 	render() {
 		const { address, onUpdateAddress } = this.props;
 
-		let title = countRender === 1 ? messages.billingAddress : messages.shippingAddress;
+		let title =
+			countRender === 1 ? messages.billingAddress : messages.shippingAddress;
 		if (address.default_billing && address.default_shipping) {
 			title = `${messages.shippingAddress} / ${messages.billingAddress}`;
 		} else if (address.default_billing) {

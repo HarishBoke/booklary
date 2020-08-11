@@ -67,24 +67,19 @@ export default class ServiceDetails extends React.Component {
 						Service error
 					</div>
 				)}
-				{service &&
-					service.enabled &&
-					serviceSettings &&
-					!serviceError && (
-						<ServiceSettings
-							initialValues={serviceSettings}
-							onSubmit={updateSettings}
-						/>
-					)}
-				{service &&
-					service.enabled &&
-					!serviceError && (
-						<ServiceActions
-							actions={actions}
-							serviceId={serviceId}
-							fetchServiceLogs={fetchServiceLogs}
-						/>
-					)}
+				{service && service.enabled && serviceSettings && !serviceError && (
+					<ServiceSettings
+						initialValues={serviceSettings}
+						onSubmit={updateSettings}
+					/>
+				)}
+				{service && service.enabled && !serviceError && (
+					<ServiceActions
+						actions={actions}
+						serviceId={serviceId}
+						fetchServiceLogs={fetchServiceLogs}
+					/>
+				)}
 				{service &&
 					service.enabled &&
 					serviceLogs &&

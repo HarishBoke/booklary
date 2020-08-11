@@ -1,57 +1,63 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { themeSettings, text } from '../../lib/settings';
-import ItemTags from './itemTags';
-import ItemImage from './itemImage';
 import ItemPrice from './itemPrice';
+import AddToCartButton from './addToCartButton';
+// import Gallery from './gallery';
+import Tags from './tags';
 
 const Item = ({
 	product,
 	addCartItem,
 	settings,
-	columnCountOnMobile = 2,
-	columnCountOnTablet = 3,
-	columnCountOnDesktop = 4,
-	columnCountOnWidescreen = 4,
-	columnCountOnFullhd = 4
+
+	selectedVariant,
+	isAllOptionsSelected = false,
+	quantity = 1
 }) => {
-	const columnCount = 12;
+	const addToCart = () => {
+		const item = {
+			product_id: product.id,
+			quantity
+		};
 
-	const columnSizeOnMobile = columnCount / columnCountOnMobile;
-	const columnSizeOnTablet = columnCount / columnCountOnTablet;
-	const columnSizeOnDesktop = columnCount / columnCountOnDesktop;
-	const columnSizeOnWidescreen = columnCount / columnCountOnWidescreen;
-	const columnSizeOnFullhd = columnCount / columnCountOnFullhd;
+		if (selectedVariant) {
+			item.variant_id = selectedVariant.id;
+		}
 
-	const imageHeight =
-		themeSettings.list_image_max_height &&
-		themeSettings.list_image_max_height > 0
-			? themeSettings.list_image_max_height
-			: 'auto';
-	const placeholderHeight =
-		themeSettings.list_image_max_height &&
-		themeSettings.list_image_max_height > 0
-			? themeSettings.list_image_max_height
-			: 200;
+		addCartItem(item);
+	};
+
+	const imageUrl =
+		product && product.images && product.images.length > 0
+			? product.images[0].url
+			: '/assets/images/noimage.svg';
 
 	return (
-		<div
-			className={`column is-${columnSizeOnMobile}-mobile is-${columnSizeOnTablet}-tablet is-${columnSizeOnDesktop}-desktop is-${columnSizeOnWidescreen}-widescreen is-${columnSizeOnFullhd}-fullhd ${product.stock_status}`}
-		>
-			<NavLink to={product.path}>
-				<figure className="image" style={{ height: imageHeight }}>
-					<ItemTags tags={product.tags} />
-					<ItemImage
-						images={product.images}
-						productName={product.name}
-						height={placeholderHeight}
-					/>
-				</figure>
-				<div className="content product-caption">
-					<div className="product-name">{product.name}</div>
-					<ItemPrice product={product} settings={settings} />
+		<div className="products__item">
+			<NavLink to={product.path} className="products__link" />
+			<div className="image-gallery-slides">
+				<div
+					className="image-gallery-image"
+					style={{ backgroundImage: `url(${imageUrl})` }}
+				/>
+			</div>
+			<Tags tags={product.tags} />
+			<div className="content products__content">
+				<div className="products__name">
+					<NavLink to={product.path}>{product.name}</NavLink>
 				</div>
-			</NavLink>
+				<ItemPrice product={product} settings={settings} />
+
+				<div className="products__button button-addtocart">
+					<AddToCartButton
+						product={product}
+						variant={selectedVariant}
+						addCartItem={addToCart}
+						isAllOptionsSelected={isAllOptionsSelected}
+					/>
+				</div>
+			</div>
 		</div>
 	);
 };
