@@ -13,19 +13,19 @@ const ajaxENV = process.env.AJAX_ENV || 'localhost:3001';
 const storeENV = process.env.STORE_ENV || 'localhost:3000';
 const apiListenPortENV = process.env.API_LISTEN_PORT;
 const storeListenPortENV = process.env.STORE_LISTEN_PORT;
-
+const currentProtocol = process.env.CURRENT_PROTOCOL || 'http';
 const dbUrl =
 	process.env.DB_URL || `mongodb://${dbCred}${dbHost}:${dbPort}/${dbName}`;
 
 module.exports = {
 	// used by Store (server side)
-	apiBaseUrl: `http://${apiENV}/api/v1`,
+	apiBaseUrl: `${currentProtocol}://${apiENV}/api/v1`,
 
 	// used by Store (server and client side)
-	ajaxBaseUrl: `http://${ajaxENV}/ajax`,
+	ajaxBaseUrl: `${currentProtocol}://${ajaxENV}/ajax`,
 
 	// Access-Control-Allow-Origin
-	storeBaseUrl: `http://${storeENV}`,
+	storeBaseUrl: `${currentProtocol}://${storeENV}`,
 
 	// used by API
 	adminLoginUrl: '/admin/login',
